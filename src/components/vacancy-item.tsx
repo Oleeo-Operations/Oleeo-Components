@@ -8,6 +8,7 @@ type VacancyItemProps = {
       key: string;
       label: string;
       isArray: boolean;
+      isHTML: boolean;
     }
   ];
   handleVacancyClick: (vac: Vacancy) => void;
@@ -49,12 +50,20 @@ const VacancyItem = (props: VacancyItemProps): JSX.Element => {
           return (
             <div className="vacancy-info-item" key={item.key}>
               <span className="item-title">{item.label}: </span>
-              <span className="item-value">
-                {/* Check if the item is an array, if it is show it as comma separated */}
-                {item.isArray
-                  ? vacancy.content[item.key].join(', ')
-                  : vacancy.content[item.key]}
-              </span>
+              {item.isHTML ? (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: vacancy.content[item.key],
+                  }}
+                />
+              ) : (
+                <span className="item-value">
+                  {/* Check if the item is an array, if it is show it as comma separated */}
+                  {item.isArray
+                    ? vacancy.content[item.key].join(', ')
+                    : vacancy.content[item.key]}
+                </span>
+              )}
             </div>
           );
         })}

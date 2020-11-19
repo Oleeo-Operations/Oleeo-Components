@@ -13,6 +13,7 @@ type VacancyListingProps = {
       key: string;
       label: string;
       isArray: boolean;
+      isHTML: boolean;
     }
   ];
   filter: (item: Vacancy) => boolean;
@@ -72,7 +73,14 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
           <Modal handleClose={handleModalClose} isOpen={!!activeVacancy}>
             <VacancyItem
               vacancy={activeVacancy}
-              propertiesToDisplay={propertiesToDisplay}
+              propertiesToDisplay={[
+                {
+                  key: 'job_description',
+                  label: 'Job Description',
+                  isArray: false,
+                  isHTML: true,
+                },
+              ]}
               handleVacancyClick={(): void => handleModalClose()}
             />
           </Modal>
