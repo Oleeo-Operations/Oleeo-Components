@@ -69,7 +69,7 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
       </div>
       {activeVacancy && (
         <div>
-          <Modal handleClose={handleModalClose}>
+          <Modal handleClose={handleModalClose} isOpen={!!activeVacancy}>
             <VacancyItem
               vacancy={activeVacancy}
               propertiesToDisplay={propertiesToDisplay}

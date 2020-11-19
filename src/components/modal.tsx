@@ -2,11 +2,12 @@ import React from 'react';
 
 type ModalProps = {
   children: JSX.Element;
+  isOpen: boolean;
   handleClose: () => void;
 };
 
 const Modal = (props: ModalProps): JSX.Element => {
-  const { children, handleClose } = props;
+  const { children, handleClose, isOpen } = props;
   return (
     <>
       <div
@@ -20,7 +21,7 @@ const Modal = (props: ModalProps): JSX.Element => {
           background: 'rgba(0,0,0,0.4)',
         }}
       />
-      <dialog>
+      <dialog open={isOpen}>
         <div className="modal-header">
           <button type="button" onClick={handleClose}>
             Close
