@@ -23,17 +23,26 @@ class RSSService {
             const vacancies = output.items.map((item: Item) => {
               // Temporarily store the item in an object
               const vac: Vacancy = { ...(item as Vacancy) };
-
-              // Split the content field by newlines then by colons to extract key=>value pairs.
-              vac.content = (item.content as string)
-                .split('\n')
-                .map((val) => {
-                  const [key, value] = val.split(':');
-                  let obj: { [key: string]: string } = {};
-                  obj[key] = value;
-                  return obj;
-                })
-                .reduce((a, b) => Object.assign(a, b));
+              const XMLParser = new DOMParser();
+              let XMLDoc = XMLParser.parseFromString(
+                vac.content as string,
+                'text/html'
+              );
+              vac.content = {};
+              let spans = XMLDoc.getElementsByTagName('span');
+              Array.from(spans).forEach((span) => {
+                const itemprop = span.getAttribute('itemprop');
+                if (vac.content[itemprop]) {
+                  if (!Array.isArray(vac.content[itemprop])) {
+                    vac.content[itemprop] = [vac.content[itemprop]];
+                  }
+                  vac.content[itemprop] = vac.content[itemprop].concat([
+                    span.innerHTML,
+                  ]);
+                } else {
+                  vac.content[itemprop] = span.innerHTML;
+                }
+              });
               return vac;
             });
 

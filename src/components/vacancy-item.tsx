@@ -3,6 +3,13 @@ import { Vacancy } from '../types/Vacancy';
 
 type VacancyItemProps = {
   vacancy: Vacancy;
+  propertiesToDisplay: [
+    {
+      key: string;
+      label: string;
+      isArray: boolean;
+    }
+  ];
 };
 
 /**
@@ -13,13 +20,44 @@ type VacancyItemProps = {
  * @return {*}  {JSX.Element}
  */
 const VacancyItem = (props: VacancyItemProps): JSX.Element => {
-  const { vacancy } = props;
-  return (
-    <div>
-      <h2>{vacancy.title}</h2>
-      <pre>{JSON.stringify(vacancy, null, 4)}</pre>
-    </div>
-  );
+  const { vacancy, propertiesToDisplay: itemsToDisplay } = props;
+  try {
+    return (
+      <div className="vacancy-item">
+        <h2 className="vacancy-title">
+          <a href={vacancy.id} className="vacancy-title-link">
+            {vacancy.title}
+          </a>
+        </h2>
+        <div className="vacancy-info-item">
+          <span className="item-title">Closing Date: </span>
+          <span className="item-value">
+            {new Intl.DateTimeFormat('en-GB').format(
+              new Date(vacancy.content.closing_date)
+            )}
+          </span>
+        </div>
+        {itemsToDisplay.map((item) => {
+          if (!vacancy.content[item.key]) {
+            return null;
+          }
+          return (
+            <div className="vacancy-info-item" key={item.key}>
+              <span className="item-title">{item.label}: </span>
+              <span className="item-value">
+                {item.isArray
+                  ? vacancy.content[item.key].join(', ')
+                  : vacancy.content[item.key]}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+    );
+  } catch ($e) {
+    console.error($e);
+    return <div className="component-error">An Error Occurred.</div>;
+  }
 };
 
 export default VacancyItem;

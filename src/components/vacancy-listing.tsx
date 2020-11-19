@@ -7,6 +7,13 @@ import { Vacancy } from '../types/Vacancy';
 type VacancyListingProps = {
   feedURL: string;
   numberOfItems: number;
+  propertiesToDisplay: [
+    {
+      key: string;
+      label: string;
+      isArray: boolean;
+    }
+  ];
   filter?: (item: Vacancy) => boolean;
 };
 
@@ -19,7 +26,7 @@ type VacancyListingProps = {
  */
 const VacancyListing = (props: VacancyListingProps): JSX.Element => {
   const [vacancies, setVacancies] = useState<Vacancy[]>(null);
-  const { feedURL, numberOfItems, filter } = props;
+  const { feedURL, numberOfItems, propertiesToDisplay, filter } = props;
 
   useEffect(() => {
     let $subscription: Subscription;
@@ -36,12 +43,18 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
   }, [feedURL]);
 
   return (
-    <div>
+    <div className="vacancy-listing">
       {vacancies &&
         vacancies
           .filter(filter || (() => true))
           .slice(0, numberOfItems)
-          .map((vac: Vacancy) => <VacancyItem vacancy={vac} key={vac.id} />)}
+          .map((vac: Vacancy) => (
+            <VacancyItem
+              vacancy={vac}
+              propertiesToDisplay={propertiesToDisplay}
+              key={vac.id}
+            />
+          ))}
     </div>
   );
 };
