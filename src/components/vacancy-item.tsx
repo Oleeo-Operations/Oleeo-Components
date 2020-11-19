@@ -45,6 +45,7 @@ const VacancyItem = (props: VacancyItemProps): JSX.Element => {
             <div className="vacancy-info-item" key={item.key}>
               <span className="item-title">{item.label}: </span>
               <span className="item-value">
+                {/* Check if the item is an array, if it is show it as comma separated */}
                 {item.isArray
                   ? vacancy.content[item.key].join(', ')
                   : vacancy.content[item.key]}
@@ -55,7 +56,7 @@ const VacancyItem = (props: VacancyItemProps): JSX.Element => {
       </div>
     );
   } catch ($e) {
-    console.error($e);
+    console.error($e); // For now, just log it to the console
     return <div className="component-error">An Error Occurred.</div>;
   }
 };

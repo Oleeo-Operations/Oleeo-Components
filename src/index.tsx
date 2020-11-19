@@ -1,6 +1,6 @@
 import VacancyListing from './components/vacancy-listing';
 
-declare var window: any;
+declare let window: any;
 
 /**
  * Store the components against window so they can be used by another script in the browser

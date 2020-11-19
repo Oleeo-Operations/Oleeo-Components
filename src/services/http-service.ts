@@ -10,6 +10,7 @@ import { map } from 'rxjs/operators';
  */
 class HttpService {
   private axios = Axios.create();
+
   public get<T>(url: string, config: AxiosRequestConfig = {}): Observable<T> {
     return from(this.axios.get(url, config)).pipe(
       map((response) => response.data)

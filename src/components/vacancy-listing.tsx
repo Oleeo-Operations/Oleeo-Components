@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import RssService from '../services/rss-service';
 import { Subscription } from 'rxjs';
+import RssService from '../services/rss-service';
 import VacancyItem from './vacancy-item';
 import { Vacancy } from '../types/Vacancy';
 
@@ -14,7 +14,7 @@ type VacancyListingProps = {
       isArray: boolean;
     }
   ];
-  filter?: (item: Vacancy) => boolean;
+  filter: (item: Vacancy) => boolean;
 };
 
 /**
@@ -29,10 +29,9 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
   const { feedURL, numberOfItems, propertiesToDisplay, filter } = props;
 
   useEffect(() => {
-    let $subscription: Subscription;
-
     // Subscribe to the rss feed
-    $subscription = RssService.getFeed(feedURL).subscribe({
+
+    const $subscription: Subscription = RssService.getFeed(feedURL).subscribe({
       next: (response) => {
         setVacancies(response);
       },
@@ -46,7 +45,7 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
     <div className="vacancy-listing">
       {vacancies &&
         vacancies
-          .filter(filter || (() => true))
+          .filter(filter || ((): boolean => true))
           .slice(0, numberOfItems)
           .map((vac: Vacancy) => (
             <VacancyItem

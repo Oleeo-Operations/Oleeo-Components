@@ -1,7 +1,7 @@
 import { from, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import httpService from './http-service';
 import Parser, { Item, Output } from 'rss-parser';
+import httpService from './http-service';
 import { Vacancy } from '../types/Vacancy';
 
 const parser = new Parser();
@@ -24,12 +24,12 @@ class RSSService {
               // Temporarily store the item in an object
               const vac: Vacancy = { ...(item as Vacancy) };
               const XMLParser = new DOMParser();
-              let XMLDoc = XMLParser.parseFromString(
+              const XMLDoc = XMLParser.parseFromString(
                 vac.content as string,
                 'text/html'
               );
               vac.content = {};
-              let spans = XMLDoc.getElementsByTagName('span');
+              const spans = XMLDoc.getElementsByTagName('span');
               Array.from(spans).forEach((span) => {
                 const itemprop = span.getAttribute('itemprop');
                 if (vac.content[itemprop]) {
