@@ -10,6 +10,7 @@ type VacancyItemProps = {
       isArray: boolean;
     }
   ];
+  handleVacancyClick: (vac: Vacancy) => void;
 };
 
 /**
@@ -20,14 +21,18 @@ type VacancyItemProps = {
  * @return {*}  {JSX.Element}
  */
 const VacancyItem = (props: VacancyItemProps): JSX.Element => {
-  const { vacancy, propertiesToDisplay: itemsToDisplay } = props;
+  const { vacancy, propertiesToDisplay, handleVacancyClick } = props;
   try {
     return (
       <div className="vacancy-item">
         <h2 className="vacancy-title">
-          <a href={vacancy.id} className="vacancy-title-link">
+          <button
+            className="vacancy-title-link"
+            type="button"
+            onClick={(): void => handleVacancyClick(vacancy)}
+          >
             {vacancy.title}
-          </a>
+          </button>
         </h2>
         <div className="vacancy-info-item">
           <span className="item-title">Closing Date: </span>
@@ -37,7 +42,7 @@ const VacancyItem = (props: VacancyItemProps): JSX.Element => {
             )}
           </span>
         </div>
-        {itemsToDisplay.map((item) => {
+        {propertiesToDisplay.map((item) => {
           if (!vacancy.content[item.key]) {
             return null;
           }

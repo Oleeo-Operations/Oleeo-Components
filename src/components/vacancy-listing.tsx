@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import RssService from '../services/rss-service';
 import VacancyItem from './vacancy-item';
 import { Vacancy } from '../types/Vacancy';
+import Modal from './modal';
 
 type VacancyListingProps = {
   feedURL: string;
@@ -26,7 +27,16 @@ type VacancyListingProps = {
  */
 const VacancyListing = (props: VacancyListingProps): JSX.Element => {
   const [vacancies, setVacancies] = useState<Vacancy[]>(null);
+  const [activeVacancy, setActiveVacancy] = useState<Vacancy>(null);
   const { feedURL, numberOfItems, propertiesToDisplay, filter } = props;
+
+  const handleVacancyClick = (vacancy: Vacancy): void => {
+    setActiveVacancy(vacancy);
+  };
+
+  const handleModalClose = (): void => {
+    setActiveVacancy(null);
+  };
 
   useEffect(() => {
     // Subscribe to the rss feed
@@ -42,19 +52,33 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
   }, [feedURL]);
 
   return (
-    <div className="vacancy-listing">
-      {vacancies &&
-        vacancies
-          .filter(filter || ((): boolean => true))
-          .slice(0, numberOfItems)
-          .map((vac: Vacancy) => (
+    <>
+      <div className="vacancy-listing">
+        {vacancies &&
+          vacancies
+            .filter(filter || ((): boolean => true))
+            .slice(0, numberOfItems)
+            .map((vac: Vacancy) => (
+              <VacancyItem
+                vacancy={vac}
+                propertiesToDisplay={propertiesToDisplay}
+                key={vac.id}
+                handleVacancyClick={handleVacancyClick}
+              />
+            ))}
+      </div>
+      {activeVacancy && (
+        <div>
+          <Modal handleClose={handleModalClose}>
             <VacancyItem
-              vacancy={vac}
+              vacancy={activeVacancy}
               propertiesToDisplay={propertiesToDisplay}
-              key={vac.id}
+              handleVacancyClick={(): void => handleModalClose()}
             />
-          ))}
-    </div>
+          </Modal>
+        </div>
+      )}
+    </>
   );
 };
 
