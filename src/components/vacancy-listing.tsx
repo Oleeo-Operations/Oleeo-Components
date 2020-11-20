@@ -5,6 +5,7 @@ import VacancyItem from './vacancy-item';
 import VacancyDescriptionModal from './vacancy-description-modal';
 import { Vacancy } from '../types/Vacancy';
 import Modal from './modal';
+import { link } from 'fs';
 
 type VacancyListingProps = {
   feedURL: string;
@@ -51,13 +52,15 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
     $event: MouseEvent<HTMLButtonElement>,
     vacancy: Vacancy
   ): void => {
+    console.log($event.target);
     setLinkClicked($event.target as HTMLButtonElement);
     setActiveVacancy(vacancy);
   };
 
   const handleModalClose = (): void => {
-    linkClicked.focus();
+    console.log({ linkClicked });
     setActiveVacancy(null);
+    linkClicked.focus();
   };
 
   useEffect(() => {
