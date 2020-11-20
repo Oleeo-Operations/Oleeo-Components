@@ -1,4 +1,4 @@
-import React, { KeyboardEvent } from 'react';
+import React, { KeyboardEvent, MouseEvent } from 'react';
 import { Vacancy } from '../types/Vacancy';
 
 type VacancyItemProps = {
@@ -11,7 +11,10 @@ type VacancyItemProps = {
       isHTML: boolean;
     }
   ];
-  handleVacancyClick: (vac: Vacancy) => void;
+  handleVacancyClick: (
+    $event: MouseEvent<HTMLButtonElement>,
+    vac: Vacancy
+  ) => void;
 };
 
 /**
@@ -29,7 +32,9 @@ const VacancyItem = (props: VacancyItemProps): JSX.Element => {
         <h2 className="vacancy-title">
           <button
             className="vacancy-title-link"
-            onClick={(): void => handleVacancyClick(vacancy)}
+            onClick={($event: MouseEvent<HTMLButtonElement>): void => {
+              return handleVacancyClick($event, vacancy);
+            }}
             type="button"
           >
             {vacancy.title}

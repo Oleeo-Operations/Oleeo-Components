@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { fromEvent } from 'rxjs';
 
 type ModalProps = {
   children: JSX.Element;
@@ -15,6 +16,20 @@ type ModalProps = {
  */
 const Modal = (props: ModalProps): JSX.Element => {
   const { children, handleClose, isOpen, width } = props;
+
+  useEffect(() => {
+    // For accessibility reasons, we need to close the Modal when the enter key is pressed.
+    const $subscription = fromEvent(document, 'keyUp').subscribe(
+      ($event: KeyboardEvent) => {
+        if ($event.key === 'Escape') {
+          handleClose();
+        }
+      }
+    );
+    // Return a cleanup function which unsubscribes
+    return (): void => $subscription.unsubscribe();
+  }, []);
+
   return (
     <>
       <div
@@ -29,6 +44,8 @@ const Modal = (props: ModalProps): JSX.Element => {
         }}
       />
       <dialog
+        aria-modal
+        aria-label=""
         open={isOpen}
         style={{
           position: 'fixed',

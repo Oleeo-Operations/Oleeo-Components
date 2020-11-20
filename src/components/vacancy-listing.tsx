@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { MouseEvent, useEffect, useState } from 'react';
 import { Subscription } from 'rxjs';
 import RssService from '../services/rss-service';
 import VacancyItem from './vacancy-item';
@@ -37,6 +37,7 @@ type VacancyListingProps = {
  */
 const VacancyListing = (props: VacancyListingProps): JSX.Element => {
   const [vacancies, setVacancies] = useState<Vacancy[]>(null);
+  const [linkClicked, setLinkClicked] = useState<HTMLButtonElement>();
   const [activeVacancy, setActiveVacancy] = useState<Vacancy>(null);
   const {
     feedURL,
@@ -46,11 +47,16 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
     filter,
   } = props;
 
-  const handleVacancyClick = (vacancy: Vacancy): void => {
+  const handleVacancyClick = (
+    $event: MouseEvent<HTMLButtonElement>,
+    vacancy: Vacancy
+  ): void => {
+    setLinkClicked($event.target as HTMLButtonElement);
     setActiveVacancy(vacancy);
   };
 
   const handleModalClose = (): void => {
+    linkClicked.focus();
     setActiveVacancy(null);
   };
 
@@ -83,20 +89,21 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
               />
             ))}
       </div>
-      {activeVacancy && (
-        <div>
-          <Modal
-            handleClose={handleModalClose}
-            isOpen={!!activeVacancy}
-            width="75%"
-          >
+
+      <div>
+        <Modal
+          handleClose={handleModalClose}
+          isOpen={!!activeVacancy}
+          width="75%"
+        >
+          {activeVacancy && (
             <VacancyDescriptionModal
               vacancy={activeVacancy}
               propertiesToDisplay={modalPropertiesToDisplay}
             />
-          </Modal>
-        </div>
-      )}
+          )}
+        </Modal>
+      </div>
     </>
   );
 };
