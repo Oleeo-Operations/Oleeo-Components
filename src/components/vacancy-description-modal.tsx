@@ -1,7 +1,7 @@
-import React, { KeyboardEvent } from 'react';
+import React from 'react';
 import { Vacancy } from '../types/Vacancy';
 
-type VacancyItemProps = {
+type VacancyDescriptionModalProps = {
   vacancy: Vacancy;
   propertiesToDisplay: [
     {
@@ -11,30 +11,23 @@ type VacancyItemProps = {
       isHTML: boolean;
     }
   ];
-  handleVacancyClick: (vac: Vacancy) => void;
 };
 
 /**
  *
- * A component to display an individual vacancy.
- * * NOTE: This is intended to be as agnostic as possible to allow styling in Webflow.
- * @param {VacancyItemProps} props
+ * A component to display an individual vacancy, used in the modal window so is slightly different to the other one.
+ * * NOTE: This is intended to be as style agnostic as possible to allow styling in Webflow.
+ * @param {VacancyDescriptionModal} props
  * @return {*}  {JSX.Element}
  */
-const VacancyItem = (props: VacancyItemProps): JSX.Element => {
-  const { vacancy, propertiesToDisplay, handleVacancyClick } = props;
+const VacancyDescriptionModal = (
+  props: VacancyDescriptionModalProps
+): JSX.Element => {
+  const { vacancy, propertiesToDisplay } = props;
   try {
     return (
       <div className="vacancy-item">
-        <h2 className="vacancy-title">
-          <button
-            className="vacancy-title-link"
-            onClick={(): void => handleVacancyClick(vacancy)}
-            type="button"
-          >
-            {vacancy.title}
-          </button>
-        </h2>
+        <h2 className="vacancy-title">{vacancy.title}</h2>
         <div className="vacancy-info-item">
           <span className="item-title">Closing Date: </span>
           <span className="item-value">
@@ -52,6 +45,8 @@ const VacancyItem = (props: VacancyItemProps): JSX.Element => {
               <span className="item-title">{item.label}: </span>
               {item.isHTML ? (
                 <div
+                  // Have to use dangerouslySetInnerHTML here because, for example, the job description is a HTML string
+                  // eslint-disable-next-line react/no-danger
                   dangerouslySetInnerHTML={{
                     __html: vacancy.content[item.key],
                   }}
@@ -67,6 +62,11 @@ const VacancyItem = (props: VacancyItemProps): JSX.Element => {
             </div>
           );
         })}
+        <div className="apply-button">
+          <a href={vacancy.link} className="btn btn-primary">
+            Apply Now
+          </a>
+        </div>
       </div>
     );
   } catch ($e) {
@@ -75,4 +75,4 @@ const VacancyItem = (props: VacancyItemProps): JSX.Element => {
   }
 };
 
-export default VacancyItem;
+export default VacancyDescriptionModal;

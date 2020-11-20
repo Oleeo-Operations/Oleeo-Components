@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Subscription } from 'rxjs';
 import RssService from '../services/rss-service';
 import VacancyItem from './vacancy-item';
+import VacancyDescriptionModal from './vacancy-description-modal';
 import { Vacancy } from '../types/Vacancy';
 import Modal from './modal';
 
@@ -9,6 +10,14 @@ type VacancyListingProps = {
   feedURL: string;
   numberOfItems: number;
   propertiesToDisplay: [
+    {
+      key: string;
+      label: string;
+      isArray: boolean;
+      isHTML: boolean;
+    }
+  ];
+  modalPropertiesToDisplay: [
     {
       key: string;
       label: string;
@@ -29,7 +38,13 @@ type VacancyListingProps = {
 const VacancyListing = (props: VacancyListingProps): JSX.Element => {
   const [vacancies, setVacancies] = useState<Vacancy[]>(null);
   const [activeVacancy, setActiveVacancy] = useState<Vacancy>(null);
-  const { feedURL, numberOfItems, propertiesToDisplay, filter } = props;
+  const {
+    feedURL,
+    numberOfItems,
+    propertiesToDisplay,
+    modalPropertiesToDisplay,
+    filter,
+  } = props;
 
   const handleVacancyClick = (vacancy: Vacancy): void => {
     setActiveVacancy(vacancy);
@@ -70,18 +85,14 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
       </div>
       {activeVacancy && (
         <div>
-          <Modal handleClose={handleModalClose} isOpen={!!activeVacancy}>
-            <VacancyItem
+          <Modal
+            handleClose={handleModalClose}
+            isOpen={!!activeVacancy}
+            width="75%"
+          >
+            <VacancyDescriptionModal
               vacancy={activeVacancy}
-              propertiesToDisplay={[
-                {
-                  key: 'job_description',
-                  label: 'Job Description',
-                  isArray: false,
-                  isHTML: true,
-                },
-              ]}
-              handleVacancyClick={(): void => handleModalClose()}
+              propertiesToDisplay={modalPropertiesToDisplay}
             />
           </Modal>
         </div>
