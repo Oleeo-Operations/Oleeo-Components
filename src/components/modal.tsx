@@ -41,6 +41,7 @@ const Modal = (props: ModalProps): JSX.Element => {
           width: '100%',
           height: '100%',
           background: 'rgba(0,0,0,0.4)',
+          display: isOpen ? 'block' : 'none',
         }}
       />
       <dialog
