@@ -19,7 +19,9 @@ const Modal = (props: ModalProps): JSX.Element => {
   const { children, handleClose, isOpen, width } = props;
   let closeButton: HTMLButtonElement;
   useEffect(() => {
-    closeButton.focus();
+    if (isOpen) {
+      closeButton.focus();
+    }
     // For accessibility reasons, we need to close the Modal when the enter key is pressed.
     const $subscription = fromEvent(document, 'keyUp').subscribe(
       ($event: KeyboardEvent) => {
