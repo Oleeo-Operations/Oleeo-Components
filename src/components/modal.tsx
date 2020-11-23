@@ -63,7 +63,7 @@ const Modal = (props: ModalProps): JSX.Element => {
         }}
       >
         <FocusTrap>
-          <>
+          <div className="modal-contents">
             <div className="modal-header">
               <button
                 type="button"
@@ -78,7 +78,7 @@ const Modal = (props: ModalProps): JSX.Element => {
               </button>
             </div>
             <div className="modal-body">{children}</div>
-          </>
+          </div>
         </FocusTrap>
       </dialog>
     </>
