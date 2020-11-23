@@ -4,6 +4,8 @@ import { fromEvent } from 'rxjs';
 
 type ModalProps = {
   children: JSX.Element;
+  modalTitle: string;
+  modalDescription: string;
   width: string;
   isOpen: boolean;
   handleClose: () => void;
@@ -16,7 +18,14 @@ type ModalProps = {
  * @return {*}  {JSX.Element}
  */
 const Modal = (props: ModalProps): JSX.Element => {
-  const { children, handleClose, isOpen, width } = props;
+  const {
+    children,
+    handleClose,
+    modalTitle,
+    modalDescription,
+    isOpen,
+    width,
+  } = props;
   let closeButton: HTMLButtonElement;
   useEffect(() => {
     if (isOpen) {
@@ -51,6 +60,8 @@ const Modal = (props: ModalProps): JSX.Element => {
       <dialog
         aria-modal
         open={isOpen}
+        aria-labelledby="modal-title"
+        aria-describedby="modal-description"
         style={{
           position: 'fixed',
           left: '50%',
@@ -67,6 +78,12 @@ const Modal = (props: ModalProps): JSX.Element => {
         {isOpen && (
           <FocusTrap>
             <div className="modal-contents">
+              <div className="sr-only" id="modal-title">
+                {modalTitle}
+              </div>
+              <div className="sr-only" id="modal-description">
+                {modalDescription}
+              </div>
               <div className="modal-header" style={{ display: 'flex' }}>
                 <div
                   className="button-container"
