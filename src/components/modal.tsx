@@ -63,20 +63,22 @@ const Modal = (props: ModalProps): JSX.Element => {
         }}
       >
         <FocusTrap>
-          <div className="modal-header">
-            <button
-              type="button"
-              onClick={handleClose}
-              className="modal-close btn btn-round"
-              ref={(el): void => {
-                closeButton = el;
-              }}
-            >
-              <span className="icon">&#10006;</span>
-              <span className="sr-only">Close Dialog</span>
-            </button>
-          </div>
-          <div className="modal-body">{children}</div>
+          <>
+            <div className="modal-header">
+              <button
+                type="button"
+                onClick={handleClose}
+                className="modal-close btn btn-round"
+                ref={(el): void => {
+                  closeButton = el;
+                }}
+              >
+                <span className="icon">&#10006;</span>
+                <span className="sr-only">Close Dialog</span>
+              </button>
+            </div>
+            <div className="modal-body">{children}</div>
+          </>
         </FocusTrap>
       </dialog>
     </>
