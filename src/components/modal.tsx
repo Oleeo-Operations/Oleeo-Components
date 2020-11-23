@@ -62,24 +62,26 @@ const Modal = (props: ModalProps): JSX.Element => {
           width,
         }}
       >
-        <FocusTrap>
-          <div className="modal-contents">
-            <div className="modal-header">
-              <button
-                type="button"
-                onClick={handleClose}
-                className="modal-close btn btn-round"
-                ref={(el): void => {
-                  closeButton = el;
-                }}
-              >
-                <span className="icon">&#10006;</span>
-                <span className="sr-only">Close Dialog</span>
-              </button>
+        {isOpen && (
+          <FocusTrap>
+            <div className="modal-contents">
+              <div className="modal-header">
+                <button
+                  type="button"
+                  onClick={handleClose}
+                  className="modal-close btn btn-round"
+                  ref={(el): void => {
+                    closeButton = el;
+                  }}
+                >
+                  <span className="icon">&#10006;</span>
+                  <span className="sr-only">Close Dialog</span>
+                </button>
+              </div>
+              <div className="modal-body">{children}</div>
             </div>
-            <div className="modal-body">{children}</div>
-          </div>
-        </FocusTrap>
+          </FocusTrap>
+        )}
       </dialog>
     </>
   );
