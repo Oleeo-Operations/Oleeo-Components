@@ -1,3 +1,4 @@
+import FocusTrap from 'focus-trap-react';
 import React, { useEffect } from 'react';
 import { fromEvent } from 'rxjs';
 
@@ -16,8 +17,9 @@ type ModalProps = {
  */
 const Modal = (props: ModalProps): JSX.Element => {
   const { children, handleClose, isOpen, width } = props;
-
+  let closeButton: HTMLButtonElement;
   useEffect(() => {
+    closeButton.focus();
     // For accessibility reasons, we need to close the Modal when the enter key is pressed.
     const $subscription = fromEvent(document, 'keyUp').subscribe(
       ($event: KeyboardEvent) => {
@@ -46,7 +48,6 @@ const Modal = (props: ModalProps): JSX.Element => {
       />
       <dialog
         aria-modal
-        aria-label=""
         open={isOpen}
         style={{
           position: 'fixed',
@@ -61,12 +62,22 @@ const Modal = (props: ModalProps): JSX.Element => {
           width,
         }}
       >
-        <div className="modal-header">
-          <button type="button" onClick={handleClose}>
-            Close
-          </button>
-        </div>
-        <div className="modal-body">{children}</div>
+        <FocusTrap>
+          <div className="modal-header">
+            <button
+              type="button"
+              onClick={handleClose}
+              className="modal-close btn btn-round"
+              ref={(el): void => {
+                closeButton = el;
+              }}
+            >
+              <span className="icon">&#10006;</span>
+              <span className="sr-only">Close Dialog</span>
+            </button>
+          </div>
+          <div className="modal-body">{children}</div>
+        </FocusTrap>
       </dialog>
     </>
   );
