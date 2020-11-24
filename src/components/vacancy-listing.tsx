@@ -69,6 +69,7 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
     const $subscription: Subscription = RssService.getFeed(feedURL).subscribe({
       next: (response) => {
         console.log({ response });
+        setHasLoaded(true);
         setVacancies(response);
       },
     });
