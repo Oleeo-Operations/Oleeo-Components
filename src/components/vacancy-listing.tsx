@@ -2,6 +2,7 @@ import React, { MouseEvent, useEffect, useState } from 'react';
 import { Subscription } from 'rxjs';
 import RssService from '../services/rss-service';
 import VacancyItem from './vacancy-item';
+import Loader from './loader/loader';
 import VacancyDescriptionModal from './vacancy-description-modal';
 import { Vacancy } from '../types/Vacancy';
 import Modal from './modal';
@@ -39,6 +40,8 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
   const [vacancies, setVacancies] = useState<Vacancy[]>(null);
   const [linkClicked, setLinkClicked] = useState<HTMLButtonElement>();
   const [activeVacancy, setActiveVacancy] = useState<Vacancy>(null);
+  const [hasLoaded, setHasLoaded] = useState<boolean>(false);
+
   const {
     feedURL,
     numberOfItems,
@@ -73,6 +76,10 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
     // Return a function to cleanup
     return (): void => $subscription.unsubscribe();
   }, [feedURL]);
+
+  if (!hasLoaded) {
+    return <Loader />;
+  }
 
   if (!vacancies || vacancies.length === 0) {
     return <span className="no-vacancies">No vacancies</span>;
