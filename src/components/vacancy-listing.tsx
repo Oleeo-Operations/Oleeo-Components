@@ -5,7 +5,6 @@ import VacancyItem from './vacancy-item';
 import VacancyDescriptionModal from './vacancy-description-modal';
 import { Vacancy } from '../types/Vacancy';
 import Modal from './modal';
-import { link } from 'fs';
 
 type VacancyListingProps = {
   feedURL: string;
@@ -52,13 +51,11 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
     $event: MouseEvent<HTMLButtonElement>,
     vacancy: Vacancy
   ): void => {
-    console.log($event.target);
     setLinkClicked($event.target as HTMLButtonElement);
     setActiveVacancy(vacancy);
   };
 
   const handleModalClose = (): void => {
-    console.log({ linkClicked });
     setActiveVacancy(null);
     linkClicked.focus();
   };
@@ -68,6 +65,7 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
 
     const $subscription: Subscription = RssService.getFeed(feedURL).subscribe({
       next: (response) => {
+        console.log({ response });
         setVacancies(response);
       },
     });
@@ -75,6 +73,10 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
     // Return a function to cleanup
     return (): void => $subscription.unsubscribe();
   }, [feedURL]);
+
+  if (!vacancies || vacancies.length === 0) {
+    return <span className="no-vacancies">No vacancies</span>;
+  }
 
   return (
     <>
