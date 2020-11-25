@@ -45,6 +45,7 @@ const VacancyDescriptionModal = (
               <span className="item-title">{item.label}: </span>
               {item.isHTML ? (
                 <div
+                  className="item-value"
                   // Have to use dangerouslySetInnerHTML here because, for example, the job description is a HTML string
                   // eslint-disable-next-line react/no-danger
                   dangerouslySetInnerHTML={{
@@ -63,7 +64,7 @@ const VacancyDescriptionModal = (
           );
         })}
         <div className="apply-button">
-          <a href={vacancy.link} className="btn btn-primary">
+          <a href={vacancy.link} className="btn btn-primary" id="vac-apply">
             Apply Now
           </a>
         </div>

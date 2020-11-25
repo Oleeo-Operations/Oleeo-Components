@@ -29,49 +29,51 @@ const VacancyItem = (props: VacancyItemProps): JSX.Element => {
   try {
     return (
       <div className="vacancy-item">
-        <h2 className="vacancy-title">
-          <button
-            className="vacancy-title-link"
-            onClick={($event: MouseEvent<HTMLButtonElement>): void => {
-              return handleVacancyClick($event, vacancy);
-            }}
-            type="button"
-          >
-            {vacancy.title}
-          </button>
-        </h2>
-        <div className="vacancy-info-item">
-          <span className="item-title">Closing Date: </span>
-          <span className="item-value">
-            {new Intl.DateTimeFormat('en-GB').format(
-              new Date(vacancy.content.closing_date)
-            )}
-          </span>
-        </div>
-        {propertiesToDisplay.map((item) => {
-          if (!vacancy.content[item.key]) {
-            return null;
-          }
-          return (
-            <div className="vacancy-info-item" key={item.key}>
-              <span className="item-title">{item.label}: </span>
-              {item.isHTML ? (
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: vacancy.content[item.key],
-                  }}
-                />
-              ) : (
-                <span className="item-value">
-                  {/* Check if the item is an array, if it is show it as comma separated */}
-                  {item.isArray
-                    ? vacancy.content[item.key].join(', ')
-                    : vacancy.content[item.key]}
-                </span>
+        <div className="vacancy-item-content">
+          <h2 className="vacancy-title">
+            <button
+              className="vacancy-title-link"
+              onClick={($event: MouseEvent<HTMLButtonElement>): void => {
+                return handleVacancyClick($event, vacancy);
+              }}
+              type="button"
+            >
+              {vacancy.title}
+            </button>
+          </h2>
+          <div className="vacancy-info-item">
+            <span className="item-title">Closing Date: </span>
+            <span className="item-value">
+              {new Intl.DateTimeFormat('en-GB').format(
+                new Date(vacancy.content.closing_date)
               )}
-            </div>
-          );
-        })}
+            </span>
+          </div>
+          {propertiesToDisplay.map((item) => {
+            if (!vacancy.content[item.key]) {
+              return null;
+            }
+            return (
+              <div className="vacancy-info-item" key={item.key}>
+                <span className="item-title">{item.label}</span>
+                {item.isHTML ? (
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: vacancy.content[item.key],
+                    }}
+                  />
+                ) : (
+                  <span className="item-value">
+                    {/* Check if the item is an array, if it is show it as comma separated */}
+                    {item.isArray
+                      ? vacancy.content[item.key].join(', ')
+                      : vacancy.content[item.key]}
+                  </span>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
     );
   } catch ($e) {

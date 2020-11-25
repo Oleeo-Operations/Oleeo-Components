@@ -10,6 +10,7 @@ import Modal from './modal';
 type VacancyListingProps = {
   feedURL: string;
   numberOfItems: number;
+  noVacanciesMessage?: string;
   propertiesToDisplay: [
     {
       key: string;
@@ -45,6 +46,7 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
   const {
     feedURL,
     numberOfItems,
+    noVacanciesMessage,
     propertiesToDisplay,
     modalPropertiesToDisplay,
     filter,
@@ -82,8 +84,16 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
     return <Loader />;
   }
 
-  if (!vacancies || vacancies.length === 0) {
-    return <span className="no-vacancies">No vacancies</span>;
+  if (
+    !vacancies ||
+    vacancies.length === 0 ||
+    vacancies.filter(filter || ((): boolean => true)).length === 0
+  ) {
+    return (
+      <span className="no-vacancies">
+        {noVacanciesMessage || 'No vacancies'}
+      </span>
+    );
   }
 
   return (
@@ -122,5 +132,7 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
     </>
   );
 };
+
+VacancyListing.defaultProps = { noVacanciesMessage: 'No vacancies' };
 
 export default VacancyListing;

@@ -1,4 +1,5 @@
 import VacancyListing from './components/vacancy-listing';
+import './styles.scss';
 
 declare let window: any;
 
