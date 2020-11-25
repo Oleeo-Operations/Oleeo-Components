@@ -42,7 +42,7 @@ const VacancyDescriptionModal = (
           }
           return (
             <div className="vacancy-info-item" key={item.key}>
-              <span className="item-title">{item.label}: </span>
+              <span className="item-title">{item.label}</span>
               {item.isHTML ? (
                 <div
                   className="item-value"

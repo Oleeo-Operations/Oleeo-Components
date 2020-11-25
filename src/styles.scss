@@ -123,9 +123,13 @@ button.btn-primary:focus,
 .vacancy-item {
   .vacancy-item-content {
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.125);
+    padding: 1rem;
+    background: #fff;
   }
   h2 {
     text-align: left;
+    margin: 0;
+    font-size: 1.5rem;
   }
   .vacancy-title-link {
     padding: 0;
@@ -135,12 +139,15 @@ button.btn-primary:focus,
     margin: 0.5rem 0;
     .item-title {
       font-weight: bold;
+      margin-right: 0.5rem;
     }
   }
 }
 
 #vac-apply {
+  text-decoration: none;
   margin: 1rem 0;
+  display: inline-block;
   &:hover,
   &:focus {
     text-decoration: none;
