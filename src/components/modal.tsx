@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+
 import FocusTrap from 'focus-trap-react';
 import React, { useEffect } from 'react';
 import { fromEvent } from 'rxjs';
@@ -57,6 +60,7 @@ const Modal = (props: ModalProps): JSX.Element => {
           background: 'rgba(0,0,0,0.4)',
           display: isOpen ? 'block' : 'none',
         }}
+        onClick={handleClose}
       />
       <dialog
         aria-modal
