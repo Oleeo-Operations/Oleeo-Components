@@ -4,13 +4,12 @@ import { Vacancy } from '../types/Vacancy';
 import RSSService from '../services/rss-service';
 
 type VacancyCountProps = {
-  text?: string;
   feedURL: string;
   filter?: (vac: Vacancy) => boolean;
 };
 
 const VacancyCount = (props: VacancyCountProps): JSX.Element => {
-  const { text, feedURL, filter } = props;
+  const { feedURL, filter } = props;
   const [vacancyCount, setVacancyCount] = useState<number>(null);
 
   useEffect(() => {
@@ -32,14 +31,13 @@ const VacancyCount = (props: VacancyCountProps): JSX.Element => {
 
   return (
     <p className="vacancy-count">
-      {vacancyCount} {text}
+      {vacancyCount} {vacancyCount === 1 ? 'vacancy' : 'vacancies'} available
     </p>
   );
 };
 
 VacancyCount.defaultProps = {
   filter: (): boolean => true,
-  text: 'vacancies available',
 };
 
 export default VacancyCount;
