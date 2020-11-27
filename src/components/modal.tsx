@@ -29,9 +29,10 @@ const Modal = (props: ModalProps): JSX.Element => {
   let closeButton: HTMLButtonElement;
   useEffect(() => {
     if (isOpen) {
+      // Focus the first button (the close button) when the modal window opens
       closeButton.focus();
     }
-    // For accessibility reasons, we need to close the Modal when the enter key is pressed.
+    // For accessibility reasons, we need to close the Modal when the escape key is pressed.
     const $subscription = fromEvent(document, 'keyUp').subscribe(
       ($event: KeyboardEvent) => {
         if ($event.key === 'Escape') {
@@ -62,6 +63,7 @@ const Modal = (props: ModalProps): JSX.Element => {
         open={isOpen}
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
+        // Set some default styles for the modal
         style={{
           position: 'fixed',
           left: '50%',
@@ -72,6 +74,7 @@ const Modal = (props: ModalProps): JSX.Element => {
           border: 'none',
           boxShadow: '0 8px 20px 0 rgba(0,0,0,0.125)',
           borderRadius: '4px',
+          maxHeight: '75vh',
           width,
         }}
       >

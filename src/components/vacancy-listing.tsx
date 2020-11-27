@@ -89,11 +89,7 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
     vacancies.length === 0 ||
     vacancies.filter(filter || ((): boolean => true)).length === 0
   ) {
-    return (
-      <span className="no-vacancies">
-        {noVacanciesMessage || 'No vacancies'}
-      </span>
-    );
+    return <span className="no-vacancies">{noVacanciesMessage}</span>;
   }
 
   return (
