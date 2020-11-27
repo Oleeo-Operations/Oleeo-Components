@@ -25,10 +25,13 @@ const VacancyCount = (props: VacancyCountProps): JSX.Element => {
     return (): void => $subscription.unsubscribe();
   }, []);
 
+  if (!vacancyCount) {
+    return null;
+  }
+
   return (
     <p>
-      {vacancyCount}
-      {text}
+      {vacancyCount} {text}
     </p>
   );
 };
