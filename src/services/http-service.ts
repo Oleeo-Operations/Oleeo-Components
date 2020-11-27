@@ -15,6 +15,7 @@ class HttpService {
   constructor() {
     this.axios.interceptors.request.use((request) => {
       const url = this.axios.getUri(request);
+      console.log(cacheService.get(url));
       if (request.method.toLowerCase() !== 'get') {
         return request;
       }

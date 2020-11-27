@@ -9,21 +9,24 @@ export interface CacheEntry {
 class CacheService {
   private readonly cache: Map<string, CacheEntry> = new Map();
 
-  private readonly cacheExpiry = 300000;
+  private readonly cacheExpiry = 1000 * 60 * 30; // 30 minute;
 
   public get(url: string): CacheEntry {
+    if (!this.cache.get(url)) {
+      return JSON.parse(localStorage.getItem(url));
+    }
     return this.cache.get(url);
   }
 
   public add(url: string, response: AxiosResponse): void {
-    this.cache.set(url, {
+    const cacheEntry: CacheEntry = {
       response,
       params: response.config.params,
       expiry: Date.now() + this.cacheExpiry,
-    });
+    };
+    this.cache.set(url, cacheEntry);
+    localStorage.setItem(url, JSON.stringify(cacheEntry));
   }
 }
 
-const cacheService = new CacheService();
-
-export default cacheService;
+export default new CacheService();
