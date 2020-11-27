@@ -79,6 +79,7 @@ const Modal = (props: ModalProps): JSX.Element => {
           boxShadow: '0 8px 20px 0 rgba(0,0,0,0.125)',
           borderRadius: '4px',
           maxHeight: '75vh',
+          overflow: 'auto',
           width,
         }}
       >
