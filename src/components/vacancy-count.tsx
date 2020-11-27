@@ -14,6 +14,7 @@ const VacancyCount = (props: VacancyCountProps): JSX.Element => {
   const [vacancyCount, setVacancyCount] = useState<number>(null);
 
   useEffect(() => {
+    console.log('HELLO FROM VACANCY COUNT');
     const $subscription = RSSService.getFeed(feedURL)
       .pipe(
         map((vacancies) => {
@@ -30,7 +31,7 @@ const VacancyCount = (props: VacancyCountProps): JSX.Element => {
   }
 
   return (
-    <p>
+    <p className="vacancy-count">
       {vacancyCount} {text}
     </p>
   );
