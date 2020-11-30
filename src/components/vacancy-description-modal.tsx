@@ -50,7 +50,6 @@ const VacancyDescriptionModal = (
             </div>
           </div>
           {propertiesToDisplay.map((item) => {
-            console.log({ item });
             if (!vacancy.content[item.key]) {
               return null;
             }

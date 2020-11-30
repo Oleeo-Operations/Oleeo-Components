@@ -16,7 +16,10 @@ const HomepageTile = (props: HomepageTileProps): JSX.Element => {
     >
       <a href={`/roles/${details.slug}`}>
         <div className="homepage-tile-inner">
-          <h3 className="homepage-tile-heading">{details.name}</h3>
+          <h3
+            className="homepage-tile-heading"
+            dangerouslySetInnerHTML={{ __html: details.name }}
+          />
           <VacancyCount count={vacancyCount} />
         </div>
       </a>
