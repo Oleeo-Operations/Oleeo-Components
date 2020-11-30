@@ -188,6 +188,8 @@ p.vacancy-count {
     margin: 1rem 0;
     border-radius: 4px;
     overflow: hidden;
+    background-size: cover;
+    background-position: center;
     a {
       display: block;
       position: absolute;
@@ -215,6 +217,7 @@ p.vacancy-count {
       margin: 0;
       color: #fff;
       font-weight: bold;
+      width: 100%;
     }
   }
 }
