@@ -3,6 +3,7 @@ import rssService from '../services/rss-service';
 import { HomepageTileDetails } from '../types/HomepageTileDetails';
 import { Vacancy } from '../types/Vacancy';
 import HomepageTile from './homepage-tile';
+import Loader from './loader/loader';
 
 type HomepageTileProps = {
   tiles: HomepageTileDetails[];
@@ -14,6 +15,7 @@ const HomepageTiles = (props: HomepageTileProps): JSX.Element => {
   const [vacancyCounts, setVacancyCounts] = useState<{ [key: string]: number }>(
     {}
   );
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const $subscription = rssService.getFeed(feedURL).subscribe({
@@ -27,10 +29,15 @@ const HomepageTiles = (props: HomepageTileProps): JSX.Element => {
           }
         });
         setVacancyCounts(counts);
+        setIsLoading(false);
       },
     });
     return (): void => $subscription.unsubscribe();
   }, []);
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   if (!tiles) {
     console.warn('No tiles supplied to HomepageTile component');

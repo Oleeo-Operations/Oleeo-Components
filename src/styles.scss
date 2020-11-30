@@ -194,6 +194,7 @@ p.vacancy-count {
     overflow: hidden;
     background-size: cover;
     background-position: center;
+    transition: 0.25s;
     &:hover {
       transform: scale(1.05);
     }
