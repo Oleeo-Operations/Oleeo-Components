@@ -24,45 +24,64 @@ const VacancyDescriptionModal = (
   props: VacancyDescriptionModalProps
 ): JSX.Element => {
   const { vacancy, propertiesToDisplay } = props;
+  console.log({ vacancy, propertiesToDisplay });
   try {
     return (
       <div className="vacancy-item">
         <h2 className="vacancy-title">{vacancy.title}</h2>
-        <div className="vacancy-info-item">
-          <span className="item-title">Closing Date: </span>
-          <span className="item-value">
-            {new Intl.DateTimeFormat('en-GB').format(
-              new Date(vacancy.content.closing_date)
-            )}
-          </span>
+        <div className="apply-button">
+          <a href={vacancy.link} className="btn btn-primary" id="vac-apply">
+            Apply Now
+          </a>
         </div>
-        {propertiesToDisplay.map((item) => {
-          if (!vacancy.content[item.key]) {
-            return null;
-          }
-          return (
-            <div className="vacancy-info-item" key={item.key}>
-              <span className="item-title">{item.label}</span>
-              {item.isHTML ? (
-                <div
-                  className="item-value"
-                  // Have to use dangerouslySetInnerHTML here because, for example, the job description is a HTML string
-                  // eslint-disable-next-line react/no-danger
-                  dangerouslySetInnerHTML={{
-                    __html: vacancy.content[item.key],
-                  }}
-                />
-              ) : (
-                <span className="item-value">
-                  {/* Check if the item is an array, if it is show it as comma separated */}
-                  {item.isArray
-                    ? vacancy.content[item.key].join(', ')
-                    : vacancy.content[item.key]}
-                </span>
+        <div className="vacancy-information">
+          <div className="vacancy-information-column">
+            <div className="vacancy-info-key">Closing Date</div>
+            <div className="vacancy-info-value">
+              {new Intl.DateTimeFormat('en').format(
+                new Date(vacancy.content.closing_date)
               )}
             </div>
-          );
-        })}
+          </div>
+          <div className="vacancy-information-column">
+            <div className="vacancy-info-key">Published </div>
+            <div className="vacancy-info-value">
+              {new Intl.DateTimeFormat('en').format(new Date(vacancy.pubDate))}
+            </div>
+          </div>
+          {propertiesToDisplay.map((item) => {
+            console.log({ item });
+            if (!vacancy.content[item.key]) {
+              return null;
+            }
+            return (
+              <div className="vacancy-information-column" key={item.key}>
+                <span className="vacancy-info-key">{item.label}</span>
+                {item.isHTML ? (
+                  <div
+                    className="vacancy-info-value"
+                    dangerouslySetInnerHTML={{
+                      __html: vacancy.content[item.key],
+                    }}
+                  />
+                ) : (
+                  <div className="vacancy-info-value">
+                    {/* Check if the item is an array, if it is show it as comma separated */}
+                    {item.isArray
+                      ? vacancy.content[item.key].join(', ')
+                      : vacancy.content[item.key]}
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+        <div
+          className="vacancy-description"
+          dangerouslySetInnerHTML={{
+            __html: vacancy.content['job_description'],
+          }}
+        />
         <div className="apply-button">
           <a href={vacancy.link} className="btn btn-primary" id="vac-apply">
             Apply Now

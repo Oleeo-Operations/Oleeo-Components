@@ -15,17 +15,21 @@ class HttpService {
   constructor() {
     this.axios.interceptors.request.use((request) => {
       const url = this.axios.getUri(request);
-      console.log(cacheService.get(url));
+
       if (request.method.toLowerCase() !== 'get') {
         return request;
       }
+
       const cachedResponse = cacheService.get(url);
+
       if (!cachedResponse) {
         return request;
       }
+
       if (cachedResponse.expiry < Date.now()) {
         return request;
       }
+
       request.adapter = (): Promise<any> =>
         Promise.resolve({
           data: cachedResponse.response.data,
@@ -37,6 +41,7 @@ class HttpService {
         });
       return request;
     });
+
     this.axios.interceptors.response.use((response: AxiosResponse) => {
       if (response.request.responseURL) {
         cacheService.add(response.request.responseURL, response);
