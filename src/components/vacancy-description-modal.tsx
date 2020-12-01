@@ -38,7 +38,7 @@ const VacancyDescriptionModal = (
           <div className="vacancy-information-column">
             <div className="vacancy-info-key">Closing Date</div>
             <div className="vacancy-info-value">
-              {new Intl.DateTimeFormat('en').format(
+              {new Intl.DateTimeFormat('en-GB').format(
                 new Date(vacancy.content.closing_date)
               )}
             </div>
@@ -46,7 +46,9 @@ const VacancyDescriptionModal = (
           <div className="vacancy-information-column">
             <div className="vacancy-info-key">Published </div>
             <div className="vacancy-info-value">
-              {new Intl.DateTimeFormat('en').format(new Date(vacancy.pubDate))}
+              {new Intl.DateTimeFormat('en-GB').format(
+                new Date(vacancy.pubDate)
+              )}
             </div>
           </div>
           {propertiesToDisplay.map((item) => {

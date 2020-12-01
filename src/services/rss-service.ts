@@ -10,7 +10,7 @@ class RSSService {
   /**
    *
    * Retrieves a feed by its URL and parses it.
-   * * Note: The logic is quite specific to the way regular RSS feeds are presented on vX and currently does not work with the structured feed.
+   * * Note: The logic is quite specific to the way regular RSS feeds are presented on vX and currently only works with the structured feed.
    * @param {string} feedURL The URL where the feed is located
    * @return {*}  {Observable<Vacancy[]>} An observable of the list of vacancies
    * @memberof
@@ -29,23 +29,29 @@ class RSSService {
                 'text/html'
               );
               vac.content = {};
+              // Look for the spans which contain the values
               const spans = XMLDoc.getElementsByTagName('span');
               Array.from(spans).forEach((span) => {
+                // The 'itemprop' attribute contains the key for the field
                 const itemprop = span.getAttribute('itemprop');
                 if (vac.content[itemprop]) {
+                  // If the value exists
                   if (!Array.isArray(vac.content[itemprop])) {
+                    // And the value is not yet an array, we make it an array
                     vac.content[itemprop] = [vac.content[itemprop]];
                   }
+                  // We add the item to the array
                   vac.content[itemprop] = vac.content[itemprop].concat([
                     span.innerHTML,
                   ]);
                 } else {
+                  // If it's not an array, just do key=>value pairs.
                   vac.content[itemprop] = span.innerHTML;
                 }
               });
               return vac;
             });
-
+            // Return our object
             return vacancies;
           })
         );

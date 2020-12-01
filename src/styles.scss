@@ -144,6 +144,9 @@ button.btn-primary:focus,
       font-weight: bold;
       margin-right: 0.5rem;
     }
+    .item-value {
+      display: inline-block;
+    }
   }
 }
 
@@ -167,14 +170,25 @@ p.vacancy-count {
 .vacancy-information {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
+  @media screen and (min-width: 768px) {
+    justify-content: space-between;
+  }
   .vacancy-information-column {
-    width: 50%;
     display: flex;
     padding: 1rem 0;
+    border-bottom: 1px solid #ddd;
+    width: calc(100% - 2rem);
+    @media screen and (min-width: 768px) {
+      width: calc(50% - 2rem);
+    }
   }
   .vacancy-info-key,
   .vacancy-info-value {
     width: 50%;
+  }
+  .vacancy-info-key {
+    color: #555;
   }
 }
 

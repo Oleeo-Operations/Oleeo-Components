@@ -28,12 +28,13 @@ type VacancyListingProps = {
     }
   ];
   filter: (item: Vacancy) => boolean;
+  sort: (a: Vacancy, b: Vacancy) => number;
 };
 
 /**
  *
  * A component to display a configurable amount of vacancies in a listing.
- *
+ * TODO: Implement a configurable way to sort the listing
  * @param {VacancyListingProps} props
  * @return {*}  {JSX.Element}
  */
@@ -50,6 +51,7 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
     propertiesToDisplay,
     modalPropertiesToDisplay,
     filter,
+    sort,
   } = props;
 
   const handleVacancyClick = (

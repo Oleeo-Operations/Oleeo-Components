@@ -58,6 +58,7 @@ const VacancyItem = (props: VacancyItemProps): JSX.Element => {
                 <span className="item-title">{item.label}</span>
                 {item.isHTML ? (
                   <div
+                    className="item-value"
                     dangerouslySetInnerHTML={{
                       __html: vacancy.content[item.key],
                     }}

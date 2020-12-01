@@ -9,7 +9,7 @@ export interface CacheEntry {
 class CacheService {
   private readonly cache: Map<string, CacheEntry> = new Map();
 
-  private readonly cacheExpiry = 1000 * 60 * 30; // 30 minute;
+  private readonly cacheExpiry = 1000 * 60 * 60 * 8; // 8 Hours;
 
   public get(url: string): CacheEntry {
     if (!this.cache.get(url)) {
