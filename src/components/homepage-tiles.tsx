@@ -35,10 +35,6 @@ const HomepageTiles = (props: HomepageTileProps): JSX.Element => {
     return (): void => $subscription.unsubscribe();
   }, []);
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
   if (!tiles) {
     console.warn('No tiles supplied to HomepageTile component');
     return null;
@@ -51,6 +47,7 @@ const HomepageTiles = (props: HomepageTileProps): JSX.Element => {
           <HomepageTile
             details={tile}
             vacancyCount={vacancyCounts[tile.name]}
+            isLoading={isLoading}
             key={tile.slug}
           />
         );

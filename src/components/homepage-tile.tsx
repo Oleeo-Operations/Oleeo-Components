@@ -5,10 +5,11 @@ import VacancyCount from './vacancy-count';
 type HomepageTileProps = {
   details: HomepageTileDetails;
   vacancyCount: number;
+  isLoading: boolean;
 };
 
 const HomepageTile = (props: HomepageTileProps): JSX.Element => {
-  const { details, vacancyCount } = props;
+  const { details, vacancyCount, isLoading } = props;
   return (
     <div
       className="homepage-tile"
@@ -20,7 +21,7 @@ const HomepageTile = (props: HomepageTileProps): JSX.Element => {
             className="homepage-tile-heading"
             dangerouslySetInnerHTML={{ __html: details.name }}
           />
-          <VacancyCount count={vacancyCount} />
+          {!isLoading && <VacancyCount count={vacancyCount} />}
         </div>
       </a>
     </div>
