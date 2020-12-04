@@ -29,7 +29,9 @@ const Modal = (props: ModalProps): JSX.Element => {
     isOpen,
     width,
   } = props;
+
   let closeButton: HTMLButtonElement;
+
   useEffect(() => {
     if (isOpen) {
       // Focus the first button (the close button) when the modal window opens
@@ -39,6 +41,7 @@ const Modal = (props: ModalProps): JSX.Element => {
     const $subscription = fromEvent(document, 'keyUp').subscribe(
       ($event: KeyboardEvent) => {
         if ($event.key === 'Escape') {
+          // If the ESC key was pressed, we close the modal
           handleClose();
         }
       }

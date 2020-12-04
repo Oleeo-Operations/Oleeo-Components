@@ -23,7 +23,7 @@ class RSSService {
             const vacancies = output.items.map((item: Item) => {
               // Temporarily store the item in an object
               const vac: Vacancy = { ...(item as Vacancy) };
-              const XMLParser = new DOMParser();
+              const XMLParser = new DOMParser(); // Create a new DOMParser to parse the vacancy content string
               const XMLDoc = XMLParser.parseFromString(
                 vac.content as string,
                 'text/html'

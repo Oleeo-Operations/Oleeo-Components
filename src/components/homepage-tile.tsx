@@ -8,6 +8,12 @@ type HomepageTileProps = {
   isLoading: boolean;
 };
 
+/**
+ * A component to display the contents of the tile (typically displayed on the homepage).
+ * Includes an image and a count of the number of vacancies which match the category.
+ * @param {HomepageTileProps} props
+ * @return {*}  {JSX.Element}
+ */
 const HomepageTile = (props: HomepageTileProps): JSX.Element => {
   const { details, vacancyCount, isLoading } = props;
   return (
@@ -19,6 +25,7 @@ const HomepageTile = (props: HomepageTileProps): JSX.Element => {
         <div className="homepage-tile-inner">
           <h3
             className="homepage-tile-heading"
+            // Need to use dangerouslySetInnerHTML because the text usually contains htmlEntities
             dangerouslySetInnerHTML={{ __html: details.name }}
           />
           {!isLoading && <VacancyCount count={vacancyCount} />}

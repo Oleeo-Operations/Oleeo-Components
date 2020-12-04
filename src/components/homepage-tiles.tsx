@@ -3,25 +3,35 @@ import rssService from '../services/rss-service';
 import { HomepageTileDetails } from '../types/HomepageTileDetails';
 import { Vacancy } from '../types/Vacancy';
 import HomepageTile from './homepage-tile';
-import Loader from './loader/loader';
 
 type HomepageTileProps = {
   tiles: HomepageTileDetails[];
   feedURL: string;
 };
 
+/**
+ * Component to display the tiles. Requires input of the FeedURL and tile details.
+ * @param {HomepageTileProps} props
+ * @return {*}  {JSX.Element}
+ */
 const HomepageTiles = (props: HomepageTileProps): JSX.Element => {
   const { tiles, feedURL } = props;
+
   const [vacancyCounts, setVacancyCounts] = useState<{ [key: string]: number }>(
     {}
   );
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
+    // Subscribe to the RSS feed to get the data
+    // TODO: Add in some error handling
     const $subscription = rssService.getFeed(feedURL).subscribe({
       next: (vacancies: Vacancy[]) => {
         const counts: { [key: string]: number } = {};
         vacancies.forEach((vacancy) => {
+          // For each vacancy, increment the appropriate category count
+          // * This can probably be improved to use Array.reduce()?
+          // TODO: Make this dynamic so it doesn't depend on "directorate"
           if (counts[vacancy.content.directorate]) {
             counts[vacancy.content.directorate] += 1;
           } else {
@@ -32,6 +42,8 @@ const HomepageTiles = (props: HomepageTileProps): JSX.Element => {
         setIsLoading(false);
       },
     });
+
+    // Return a function to clean up
     return (): void => $subscription.unsubscribe();
   }, []);
 

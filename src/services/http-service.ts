@@ -1,4 +1,4 @@
-import Axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import Axios, { AxiosPromise, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { from, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import cacheService from './cache-service';
@@ -30,7 +30,7 @@ class HttpService {
         return request;
       }
 
-      request.adapter = (): Promise<any> =>
+      request.adapter = (): AxiosPromise<unknown> =>
         Promise.resolve({
           data: cachedResponse.response.data,
           headers: request.headers,
