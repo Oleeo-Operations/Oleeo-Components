@@ -7,6 +7,7 @@ import HomepageTile from './homepage-tile';
 type HomepageTileProps = {
   tiles: HomepageTileDetails[];
   feedURL: string;
+  countField: string;
 };
 
 /**
@@ -15,7 +16,7 @@ type HomepageTileProps = {
  * @return {*}  {JSX.Element}
  */
 const HomepageTiles = (props: HomepageTileProps): JSX.Element => {
-  const { tiles, feedURL } = props;
+  const { tiles, feedURL, countField } = props;
 
   const [vacancyCounts, setVacancyCounts] = useState<{ [key: string]: number }>(
     {}
@@ -31,11 +32,10 @@ const HomepageTiles = (props: HomepageTileProps): JSX.Element => {
         vacancies.forEach((vacancy) => {
           // For each vacancy, increment the appropriate category count
           // * This can probably be improved to use Array.reduce()?
-          // TODO: Make this dynamic so it doesn't depend on "directorate"
-          if (counts[vacancy.content.directorate]) {
-            counts[vacancy.content.directorate] += 1;
+          if (counts[vacancy.content[countField]]) {
+            counts[vacancy.content[countField]] += 1;
           } else {
-            counts[vacancy.content.directorate] = 1;
+            counts[vacancy.content[countField]] = 1;
           }
         });
         setVacancyCounts(counts);
