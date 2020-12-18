@@ -1,6 +1,6 @@
 import React, { KeyboardEvent, useEffect, useState } from 'react';
-import { fromEvent, Subject, Subscription } from 'rxjs';
-import { debounceTime, tap } from 'rxjs/operators';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import rssService from '../services/rss-service';
 import { Vacancy } from '../types/Vacancy';
 
@@ -22,6 +22,7 @@ const Search = (props: SearchProps): JSX.Element => {
   let $KeyupSubscription: Subscription;
 
   const [vacancies, setVacancies] = useState<Vacancy[]>([]);
+  const [latestSearchTerm, setLatestSearchTerm] = useState<string>('');
   const [searchResultVacancies, setSearchResultVacancies] = useState<Vacancy[]>(
     []
   );
@@ -36,6 +37,7 @@ const Search = (props: SearchProps): JSX.Element => {
           setSearchResultVacancies(() => []);
           setSearchResultCategories(() => []);
         } else {
+          setLatestSearchTerm(value);
           setSearchResultVacancies(() => [
             ...vacancies.filter((vac) =>
               vac.title.toLowerCase().includes(value.toLowerCase())
@@ -60,16 +62,11 @@ const Search = (props: SearchProps): JSX.Element => {
   };
 
   const getVacanciesFromRSS = (): void => {
-    console.log({ vacancies });
-    $RssSubscription = rssService
-      .getFeed(feedURL)
-      .pipe(tap((x) => console.log(x)))
-      .subscribe({
-        next: (response) => {
-          console.log({ response });
-          setVacancies(response);
-        },
-      });
+    $RssSubscription = rssService.getFeed(feedURL).subscribe({
+      next: (response) => {
+        setVacancies(response);
+      },
+    });
   };
 
   useEffect(() => {
@@ -89,12 +86,24 @@ const Search = (props: SearchProps): JSX.Element => {
         </label>
         <input type="text" name="search" id="search" onKeyUp={handleKeyup} />
       </div>
-      {searchResultCategories.map((cat) => {
-        return <p>{cat}</p>;
-      })}
-      {searchResultVacancies.map((vac) => {
-        return <h2>{vac.title}</h2>;
-      })}
+      <div className="search-results">
+        <span aria-live="polite">
+          {searchResultCategories.length} categories and{' '}
+          {searchResultVacancies.length} vacancies found matching current search
+          term (&quot;{latestSearchTerm}&quot;)
+        </span>
+        {searchResultCategories.map((cat) => {
+          return <p>{cat}</p>;
+        })}
+        {searchResultVacancies.map((vac) => {
+          return (
+            <div className="search-result-vacancy">
+              <h2>{vac.title}</h2>
+              <span>{vac.content['directorate']}</span>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
