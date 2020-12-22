@@ -1,4 +1,4 @@
-export type HomepageTileDetails = {
+export type CategoryDetails = {
   name: string;
   slug: string;
   imageSrc: string;

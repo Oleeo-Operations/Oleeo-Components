@@ -2,11 +2,13 @@ import React, { KeyboardEvent, useEffect, useState } from 'react';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import rssService from '../services/rss-service';
+import { CategoryDetails } from '../types/HomepageTileDetails';
 import { Vacancy } from '../types/Vacancy';
+import SearchResults from './search-results';
 
 type SearchProps = {
   feedURL: string;
-  categories: string[];
+  categories: CategoryDetails[];
 };
 /**
  * Component to handle search functionality.
@@ -27,7 +29,7 @@ const Search = (props: SearchProps): JSX.Element => {
     []
   );
   const [searchResultCategories, setSearchResultCategories] = useState<
-    string[]
+    CategoryDetails[]
   >([]);
 
   const subscribeToSearchInput = (): void => {
@@ -43,9 +45,9 @@ const Search = (props: SearchProps): JSX.Element => {
               vac.title.toLowerCase().includes(value.toLowerCase())
             ),
           ]);
-          setSearchResultCategories((): string[] =>
+          setSearchResultCategories((): CategoryDetails[] =>
             categories.filter((cat) =>
-              cat.toLowerCase().includes(value.toLowerCase())
+              cat.name.toLowerCase().includes(value.toLowerCase())
             )
           );
         }
@@ -86,24 +88,11 @@ const Search = (props: SearchProps): JSX.Element => {
         </label>
         <input type="text" name="search" id="search" onKeyUp={handleKeyup} />
       </div>
-      <div className="search-results">
-        <span aria-live="polite">
-          {searchResultCategories.length} categories and{' '}
-          {searchResultVacancies.length} vacancies found matching current search
-          term (&quot;{latestSearchTerm}&quot;)
-        </span>
-        {searchResultCategories.map((cat) => {
-          return <p>{cat}</p>;
-        })}
-        {searchResultVacancies.map((vac) => {
-          return (
-            <div className="search-result-vacancy">
-              <h2>{vac.title}</h2>
-              <span>{vac.content['directorate']}</span>
-            </div>
-          );
-        })}
-      </div>
+      <SearchResults
+        categories={searchResultCategories}
+        vacancies={searchResultVacancies}
+        searchTerm={latestSearchTerm}
+      />
     </div>
   );
 };

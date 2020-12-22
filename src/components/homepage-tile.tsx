@@ -1,9 +1,9 @@
 import React from 'react';
-import { HomepageTileDetails } from '../types/HomepageTileDetails';
+import { CategoryDetails } from '../types/HomepageTileDetails';
 import VacancyCount from './vacancy-count';
 
 type HomepageTileProps = {
-  details: HomepageTileDetails;
+  details: CategoryDetails;
   vacancyCount: number;
   isLoading: boolean;
 };

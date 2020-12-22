@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import rssService from '../services/rss-service';
-import { HomepageTileDetails } from '../types/HomepageTileDetails';
+import { CategoryDetails } from '../types/HomepageTileDetails';
 import { Vacancy } from '../types/Vacancy';
 import HomepageTile from './homepage-tile';
 
 type HomepageTileProps = {
-  tiles: HomepageTileDetails[];
+  tiles: CategoryDetails[];
   feedURL: string;
   countField: string;
 };
