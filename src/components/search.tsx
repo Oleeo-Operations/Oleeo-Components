@@ -109,7 +109,7 @@ const Search = (props: SearchProps): JSX.Element => {
           name="search"
           id="search"
           onKeyUp={handleKeyup}
-          style={{ display: 'block', width: '100%' }}
+          style={{ display: 'block', width: '100%', padding: '0.4rem 0.8rem' }}
         />
       </div>
       <SearchResults

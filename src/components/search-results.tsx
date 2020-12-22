@@ -31,6 +31,7 @@ const SearchResults = (props: SearchResultsProps): JSX.Element => {
             boxShadow: '0 1px 3px 0 rgba(0,0,0,.3)',
             maxHeight: '300px',
             overflowY: 'scroll',
+            zIndex: 999,
           }}
         >
           <p className="sr-only" aria-live="polite">
