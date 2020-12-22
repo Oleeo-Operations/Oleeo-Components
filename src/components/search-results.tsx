@@ -8,6 +8,13 @@ type SearchResultsProps = {
   searchTerm: string;
 };
 
+/**
+ * A component to display the results of the search.
+ * Displays categories and vacancies which contain the search term.
+ * TODO: Think about using a fuzzy search package to improve the results.
+ * @param {SearchResultsProps} props
+ * @return {*}  {JSX.Element}
+ */
 const SearchResults = (props: SearchResultsProps): JSX.Element => {
   const { categories, vacancies, searchTerm } = props;
   return (
