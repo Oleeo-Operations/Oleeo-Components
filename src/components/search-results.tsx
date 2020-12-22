@@ -42,7 +42,7 @@ const SearchResults = (props: SearchResultsProps): JSX.Element => {
             <ul>
               {categories.map((category) => (
                 <li>
-                  <a href={category.slug}>{category.name}</a>
+                  <a href={`/roles/${category.slug}`}>{category.name}</a>
                 </li>
               ))}
             </ul>
