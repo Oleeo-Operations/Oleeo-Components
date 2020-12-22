@@ -92,12 +92,25 @@ const Search = (props: SearchProps): JSX.Element => {
   }, []);
 
   return (
-    <div id="vacancy-search">
+    <div
+      id="vacancy-search"
+      style={{
+        position: 'relative',
+        width: '100%',
+        textAlign: 'center',
+      }}
+    >
       <div className="search-input">
         <label htmlFor="search" className="sr-only">
           Search
         </label>
-        <input type="text" name="search" id="search" onKeyUp={handleKeyup} />
+        <input
+          type="text"
+          name="search"
+          id="search"
+          onKeyUp={handleKeyup}
+          style={{ display: 'block', width: '100%' }}
+        />
       </div>
       <SearchResults
         categories={searchResultCategories}
