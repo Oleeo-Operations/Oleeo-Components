@@ -108,6 +108,7 @@ const Search = (props: SearchProps): JSX.Element => {
           type="text"
           name="search"
           id="search"
+          placeholder="Find your role"
           onKeyUp={handleKeyup}
           style={{ display: 'block', width: '100%', padding: '0.4rem 0.8rem' }}
         />
