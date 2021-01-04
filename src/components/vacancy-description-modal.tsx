@@ -79,7 +79,7 @@ const VacancyDescriptionModal = (
         <div
           className="vacancy-description"
           dangerouslySetInnerHTML={{
-            __html: vacancy.content['job_description'],
+            __html: vacancy.content.job_description,
           }}
         />
         <div className="apply-button">

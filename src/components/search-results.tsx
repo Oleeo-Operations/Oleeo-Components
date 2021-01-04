@@ -39,16 +39,16 @@ const SearchResults = (props: SearchResultsProps): JSX.Element => {
             found matching current search term (&quot;{searchTerm}&quot;)
           </p>
           <div className="search-result-categories">
-            <ul>
+            <ul className="search-result-categories-list">
               {categories.map((category) => (
-                <li key={category.name}>
+                <li key={category.name} className="search-result-category">
                   <a href={`/roles/${category.slug}`}>{category.name}</a>
                 </li>
               ))}
             </ul>
           </div>
           <div className="search-result-vacancies">
-            <ul>
+            <ul className="search-result-vacancy-list">
               {vacancies.map((vacancy) => (
                 <li className="search-result-vacancy" key={vacancy.id}>
                   <a href={vacancy.id}>
