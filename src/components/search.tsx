@@ -1,6 +1,7 @@
 import React, { KeyboardEvent, useEffect, useState } from 'react';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import Fuse from 'fuse.js';
 import rssService from '../services/rss-service';
 import { CategoryDetails } from '../types/HomepageTileDetails';
 import { Vacancy } from '../types/Vacancy';
@@ -10,6 +11,9 @@ type SearchProps = {
   feedURL: string;
   categories: CategoryDetails[];
 };
+
+let fuse: Fuse<Vacancy>;
+
 /**
  * Component to handle search functionality.
  * Contains a input field that the user can enter a search term.
@@ -41,12 +45,14 @@ const Search = (props: SearchProps): JSX.Element => {
           setSearchResultVacancies(() => []);
           setSearchResultCategories(() => []);
         } else {
-          setLatestSearchTerm(value); // Set the value to the term.
-          setSearchResultVacancies(() => [
-            ...vacancies.filter((vac) =>
-              vac.title.toLowerCase().includes(value.toLowerCase())
-            ),
-          ]);
+          if (fuse) {
+            console.log(fuse.search(value));
+            setLatestSearchTerm(value); // Set the value to the term.
+            setSearchResultVacancies(() => [
+              ...(fuse.search(value).map((result) => result.item) as Vacancy[]),
+            ]);
+          }
+
           setSearchResultCategories((): CategoryDetails[] =>
             categories.filter((cat) =>
               cat.name.toLowerCase().includes(value.toLowerCase())
@@ -71,6 +77,12 @@ const Search = (props: SearchProps): JSX.Element => {
   const getVacanciesFromRSS = (): void => {
     $RssSubscription = rssService.getFeed(feedURL).subscribe({
       next: (response) => {
+        console.log({ response });
+        fuse = new Fuse(response, {
+          includeScore: true,
+          keys: ['title', ['content.job_description']],
+        });
+        console.log({ fuse });
         setVacancies(response);
       },
     });
