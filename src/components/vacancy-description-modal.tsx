@@ -24,7 +24,6 @@ const VacancyDescriptionModal = (
   props: VacancyDescriptionModalProps
 ): JSX.Element => {
   const { vacancy, propertiesToDisplay } = props;
-  console.log({ vacancy, propertiesToDisplay });
   try {
     return (
       <div className="vacancy-item">
