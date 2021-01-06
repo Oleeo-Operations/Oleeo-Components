@@ -81,7 +81,6 @@ const Search = (props: SearchProps): JSX.Element => {
     $RssSubscription = rssService.getFeed(feedURL).subscribe({
       next: (response) => {
         vacancyFuzzSearcher = new Fuse(response, {
-          includeScore: true,
           keys: ['title'],
           threshold: 0.4,
         });
@@ -93,7 +92,6 @@ const Search = (props: SearchProps): JSX.Element => {
   useEffect(() => {
     getVacanciesFromRSS();
     categoryFuzzySearcher = new Fuse(categories, {
-      includeScore: true,
       keys: ['name'],
       threshold: 0.4,
     });
