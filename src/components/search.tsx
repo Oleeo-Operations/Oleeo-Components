@@ -12,7 +12,8 @@ type SearchProps = {
   categories: CategoryDetails[];
 };
 
-let fuse: Fuse<Vacancy>;
+let vacancyFuzzSearcher: Fuse<Vacancy>;
+let categoryFuzzySearcher: Fuse<CategoryDetails>;
 
 /**
  * Component to handle search functionality.
@@ -45,19 +46,21 @@ const Search = (props: SearchProps): JSX.Element => {
           setSearchResultVacancies(() => []);
           setSearchResultCategories(() => []);
         } else {
-          if (fuse) {
-            console.log(fuse.search(value));
+          if (vacancyFuzzSearcher) {
             setLatestSearchTerm(value); // Set the value to the term.
             setSearchResultVacancies(() => [
-              ...(fuse.search(value).map((result) => result.item) as Vacancy[]),
+              ...(vacancyFuzzSearcher
+                .search(value)
+                .map((result) => result.item) as Vacancy[]),
             ]);
           }
-
-          setSearchResultCategories((): CategoryDetails[] =>
-            categories.filter((cat) =>
-              cat.name.toLowerCase().includes(value.toLowerCase())
-            )
-          );
+          if (categoryFuzzySearcher) {
+            setSearchResultCategories((): CategoryDetails[] => [
+              ...(categoryFuzzySearcher
+                .search(value)
+                .map((result) => result.item) as CategoryDetails[]),
+            ]);
+          }
         }
       },
     });
@@ -77,11 +80,10 @@ const Search = (props: SearchProps): JSX.Element => {
   const getVacanciesFromRSS = (): void => {
     $RssSubscription = rssService.getFeed(feedURL).subscribe({
       next: (response) => {
-        fuse = new Fuse(response, {
+        vacancyFuzzSearcher = new Fuse(response, {
           includeScore: true,
           keys: ['title', ['content.job_description']],
         });
-        console.log({ fuse });
         setVacancies(response);
       },
     });
@@ -89,7 +91,10 @@ const Search = (props: SearchProps): JSX.Element => {
 
   useEffect(() => {
     getVacanciesFromRSS();
-
+    categoryFuzzySearcher = new Fuse(categories, {
+      includeScore: true,
+      keys: ['name'],
+    });
     // Return a cleanup function.
     return (): void => {
       // Unsubscribe from our Observables
