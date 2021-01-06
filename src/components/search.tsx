@@ -82,7 +82,8 @@ const Search = (props: SearchProps): JSX.Element => {
       next: (response) => {
         vacancyFuzzSearcher = new Fuse(response, {
           includeScore: true,
-          keys: ['title', ['content.job_description']],
+          keys: ['title'],
+          threshold: 0.4,
         });
         setVacancies(response);
       },
@@ -94,6 +95,7 @@ const Search = (props: SearchProps): JSX.Element => {
     categoryFuzzySearcher = new Fuse(categories, {
       includeScore: true,
       keys: ['name'],
+      threshold: 0.4,
     });
     // Return a cleanup function.
     return (): void => {
