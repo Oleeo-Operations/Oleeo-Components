@@ -42,7 +42,10 @@ const SearchResults = (props: SearchResultsProps): JSX.Element => {
             <ul className="search-result-categories-list">
               {categories.map((category) => (
                 <li key={category.name} className="search-result-category">
-                  <a href={`/roles/${category.slug}`}>{category.name}</a>
+                  <a
+                    href={`/roles/${category.slug}`}
+                    dangerouslySetInnerHTML={{ __html: category.name }}
+                  />
                 </li>
               ))}
             </ul>
@@ -52,8 +55,14 @@ const SearchResults = (props: SearchResultsProps): JSX.Element => {
               {vacancies.map((vacancy) => (
                 <li className="search-result-vacancy" key={vacancy.id}>
                   <a href={vacancy.id}>
-                    <div className="vacancy-title">
-                      <h3>{vacancy.title}</h3>
+                    <span className="vacancy-title">{vacancy.title}</span>
+                    <div className="vacancy-details">
+                      <span className="closing-date">
+                        Closing Date:
+                        {new Intl.DateTimeFormat('en-GB').format(
+                          new Date(vacancy.content.closing_date)
+                        )}
+                      </span>
                     </div>
                   </a>
                 </li>

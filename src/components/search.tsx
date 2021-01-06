@@ -77,7 +77,6 @@ const Search = (props: SearchProps): JSX.Element => {
   const getVacanciesFromRSS = (): void => {
     $RssSubscription = rssService.getFeed(feedURL).subscribe({
       next: (response) => {
-        console.log({ response });
         fuse = new Fuse(response, {
           includeScore: true,
           keys: ['title', ['content.job_description']],
@@ -104,14 +103,7 @@ const Search = (props: SearchProps): JSX.Element => {
   }, []);
 
   return (
-    <div
-      id="vacancy-search"
-      style={{
-        position: 'relative',
-        width: '100%',
-        textAlign: 'center',
-      }}
-    >
+    <div id="vacancy-search">
       <div className="search-input">
         <label htmlFor="search" className="sr-only">
           Search
@@ -119,10 +111,9 @@ const Search = (props: SearchProps): JSX.Element => {
         <input
           type="text"
           name="search"
-          id="search"
+          id="search-input"
           placeholder="Find your role"
           onKeyUp={handleKeyup}
-          style={{ display: 'block', width: '100%', padding: '0.4rem 0.8rem' }}
         />
       </div>
       <SearchResults
