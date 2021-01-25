@@ -1,6 +1,7 @@
 import React, { KeyboardEvent, useEffect, useState } from 'react';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import Fuse from 'fuse.js';
 import rssService from '../services/rss-service';
 import { CategoryDetails } from '../types/HomepageTileDetails';
 import { Vacancy } from '../types/Vacancy';
@@ -10,6 +11,10 @@ type SearchProps = {
   feedURL: string;
   categories: CategoryDetails[];
 };
+
+let vacancyFuzzSearcher: Fuse<Vacancy>;
+let categoryFuzzySearcher: Fuse<CategoryDetails>;
+
 /**
  * Component to handle search functionality.
  * Contains a input field that the user can enter a search term.
@@ -41,17 +46,21 @@ const Search = (props: SearchProps): JSX.Element => {
           setSearchResultVacancies(() => []);
           setSearchResultCategories(() => []);
         } else {
-          setLatestSearchTerm(value); // Set the value to the term.
-          setSearchResultVacancies(() => [
-            ...vacancies.filter((vac) =>
-              vac.title.toLowerCase().includes(value.toLowerCase())
-            ),
-          ]);
-          setSearchResultCategories((): CategoryDetails[] =>
-            categories.filter((cat) =>
-              cat.name.toLowerCase().includes(value.toLowerCase())
-            )
-          );
+          if (vacancyFuzzSearcher) {
+            setLatestSearchTerm(value); // Set the value to the term.
+            setSearchResultVacancies(() => [
+              ...(vacancyFuzzSearcher
+                .search(value)
+                .map((result) => result.item) as Vacancy[]),
+            ]);
+          }
+          if (categoryFuzzySearcher) {
+            setSearchResultCategories((): CategoryDetails[] => [
+              ...(categoryFuzzySearcher
+                .search(value)
+                .map((result) => result.item) as CategoryDetails[]),
+            ]);
+          }
         }
       },
     });
@@ -71,6 +80,10 @@ const Search = (props: SearchProps): JSX.Element => {
   const getVacanciesFromRSS = (): void => {
     $RssSubscription = rssService.getFeed(feedURL).subscribe({
       next: (response) => {
+        vacancyFuzzSearcher = new Fuse(response, {
+          keys: ['title'],
+          threshold: 0.4,
+        });
         setVacancies(response);
       },
     });
@@ -78,7 +91,10 @@ const Search = (props: SearchProps): JSX.Element => {
 
   useEffect(() => {
     getVacanciesFromRSS();
-
+    categoryFuzzySearcher = new Fuse(categories, {
+      keys: ['name'],
+      threshold: 0.4,
+    });
     // Return a cleanup function.
     return (): void => {
       // Unsubscribe from our Observables
@@ -92,14 +108,7 @@ const Search = (props: SearchProps): JSX.Element => {
   }, []);
 
   return (
-    <div
-      id="vacancy-search"
-      style={{
-        position: 'relative',
-        width: '100%',
-        textAlign: 'center',
-      }}
-    >
+    <div id="vacancy-search">
       <div className="search-input">
         <label htmlFor="search" className="sr-only">
           Search
@@ -107,10 +116,9 @@ const Search = (props: SearchProps): JSX.Element => {
         <input
           type="text"
           name="search"
-          id="search"
+          id="search-input"
           placeholder="Find your role"
           onKeyUp={handleKeyup}
-          style={{ display: 'block', width: '100%', padding: '0.4rem 0.8rem' }}
         />
       </div>
       <SearchResults

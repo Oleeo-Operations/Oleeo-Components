@@ -247,3 +247,40 @@ p.vacancy-count {
     }
   }
 }
+
+/* Search Component */
+#vacancy-search {
+  width: 100%;
+  position: relative;
+  #search-input {
+    display: block;
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+  }
+}
+/* Search Results Component */
+.search-results {
+  text-align: left;
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  li {
+    padding: 1rem;
+    border-bottom: 1px solid #ccc;
+  }
+  .search-result-categories-list {
+    display: flex;
+    flex-wrap: wrap;
+    .search-result-category {
+      flex-basis: 50%;
+    }
+  }
+  .search-result-vacancy {
+    a {
+      color: #444;
+      text-decoration: none;
+    }
+  }
+}

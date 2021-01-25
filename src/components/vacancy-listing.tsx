@@ -62,9 +62,15 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
     setActiveVacancy(vacancy);
   };
 
-  const handleModalClose = (): void => {
+  const closeModal = (): void => {
     setActiveVacancy(null);
-    linkClicked.focus();
+    if (linkClicked) {
+      linkClicked.focus();
+    }
+  };
+
+  const handleModalClose = (): void => {
+    closeModal();
   };
 
   useEffect(() => {
