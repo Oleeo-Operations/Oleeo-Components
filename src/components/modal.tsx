@@ -3,7 +3,7 @@
 
 import FocusTrap from 'focus-trap-react';
 import React, { useEffect } from 'react';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
 
 type ModalProps = {
   children: JSX.Element;
@@ -30,6 +30,8 @@ const Modal = (props: ModalProps): JSX.Element => {
     width,
   } = props;
 
+  let $subscription: Subscription;
+
   let closeButton: HTMLButtonElement;
 
   useEffect(() => {
@@ -38,7 +40,7 @@ const Modal = (props: ModalProps): JSX.Element => {
       closeButton.focus();
     }
     // For accessibility reasons, we need to close the Modal when the escape key is pressed.
-    const $subscription = fromEvent(document, 'keyUp').subscribe(
+    $subscription = fromEvent(document, 'keyup').subscribe(
       ($event: KeyboardEvent) => {
         if ($event.key === 'Escape') {
           // If the ESC key was pressed, we close the modal
@@ -51,44 +53,45 @@ const Modal = (props: ModalProps): JSX.Element => {
   }, []);
 
   return (
-    <>
-      <div
-        className="modal-overlay"
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          background: 'rgba(0,0,0,0.4)',
-          display: isOpen ? 'block' : 'none',
-        }}
-        onClick={handleClose}
-      />
-      <dialog
-        aria-modal
-        open={isOpen}
-        aria-labelledby="modal-title"
-        aria-describedby="modal-description"
-        // Set some default styles for the modal
-        style={{
-          position: 'fixed',
-          left: '50%',
-          top: '50%',
-          height: 'auto',
-          padding: '1rem 2rem',
-          transform: 'translate(-50%, -50%)',
-          zIndex: 999,
-          border: 'none',
-          boxShadow: '0 8px 20px 0 rgba(0,0,0,0.125)',
-          borderRadius: '4px',
-          maxHeight: '75vh',
-          overflow: 'auto',
-          width,
-        }}
-      >
-        {isOpen && (
-          <FocusTrap>
+    isOpen && (
+      <>
+        <div
+          className="modal-overlay"
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: 'rgba(0,0,0,0.4)',
+          }}
+          onClick={($event): void => {
+            handleClose();
+          }}
+        />
+        <dialog
+          aria-modal
+          open={isOpen}
+          aria-labelledby="modal-title"
+          aria-describedby="modal-description"
+          // Set some default styles for the modal
+          style={{
+            position: 'fixed',
+            left: '50%',
+            top: '50%',
+            height: 'auto',
+            padding: '1rem 2rem',
+            transform: 'translate(-50%, -50%)',
+            zIndex: 999,
+            border: 'none',
+            boxShadow: '0 8px 20px 0 rgba(0,0,0,0.125)',
+            borderRadius: '4px',
+            maxHeight: '75vh',
+            overflow: 'auto',
+            width,
+          }}
+        >
+          <FocusTrap focusTrapOptions={{ allowOutsideClick: true }}>
             <div className="modal-contents">
               <div className="sr-only" id="modal-title">
                 {modalTitle}
@@ -119,9 +122,9 @@ const Modal = (props: ModalProps): JSX.Element => {
               <div className="modal-body">{children}</div>
             </div>
           </FocusTrap>
-        )}
-      </dialog>
-    </>
+        </dialog>
+      </>
+    )
   );
 };
 
