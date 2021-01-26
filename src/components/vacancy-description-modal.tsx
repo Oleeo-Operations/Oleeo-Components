@@ -29,7 +29,12 @@ const VacancyDescriptionModal = (
       <div className="vacancy-item">
         <h2 className="vacancy-title">{vacancy.title}</h2>
         <div className="apply-button">
-          <a href={vacancy.link} className="btn btn-primary" id="vac-apply">
+          <a
+            href={vacancy.link}
+            className="btn btn-primary"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
             Apply Now
           </a>
         </div>
@@ -83,7 +88,12 @@ const VacancyDescriptionModal = (
           }}
         />
         <div className="apply-button">
-          <a href={vacancy.link} className="btn btn-primary" id="vac-apply">
+          <a
+            href={vacancy.link}
+            className="btn btn-primary"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
             Apply Now
           </a>
         </div>
