@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.21.0",
+    "core-js": "^3.8.3",
     "focus-trap-react": "^8.3.0",
     "fuse.js": "^6.4.5",
     "react": "^16.14.0",

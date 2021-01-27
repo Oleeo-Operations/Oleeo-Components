@@ -1,7 +1,8 @@
+import 'core-js/features/map';
+import 'core-js/features/set';
 import VacancyListing from './components/vacancy-listing';
 import HomepageTiles from './components/homepage-tiles';
 import Search from './components/search';
-import './styles.scss';
 
 declare let window: any;
 
