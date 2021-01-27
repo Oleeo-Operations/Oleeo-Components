@@ -6,11 +6,6 @@ module.exports = {
   entry: './src/index.tsx',
   mode: 'production',
   target: 'web',
-  externals: {
-    react: 'React',
-    'react-dom': 'ReactDOM',
-    'react-router': 'ReactRouter',
-  },
   module: {
     rules: [
       {
