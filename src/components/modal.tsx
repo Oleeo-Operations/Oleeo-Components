@@ -83,7 +83,6 @@ const Modal = (props: ModalProps): JSX.Element => {
             height: 'auto',
             padding: '1rem 2rem',
             transform: 'translate(-50%, -50%)',
-            zIndex: 999,
             border: 'none',
             boxShadow: '0 8px 20px 0 rgba(0,0,0,0.125)',
             borderRadius: '4px',
