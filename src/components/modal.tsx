@@ -72,6 +72,7 @@ const Modal = (props: ModalProps): JSX.Element => {
         <dialog
           aria-modal
           open={isOpen}
+          className="modal"
           aria-labelledby="modal-title"
           aria-describedby="modal-description"
           // Set some default styles for the modal
