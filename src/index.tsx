@@ -1,5 +1,5 @@
-import 'core-js/features/map';
-import 'core-js/features/set';
+import 'core-js/es/map';
+import 'core-js/es/set';
 import VacancyListing from './components/vacancy-listing';
 import HomepageTiles from './components/homepage-tiles';
 import Search from './components/search';
