@@ -1,6 +1,3 @@
-import 'core-js/es/map';
-import 'core-js/es/set';
-import 'react-dom';
 import VacancyListing from './components/vacancy-listing';
 import HomepageTiles from './components/homepage-tiles';
 import Search from './components/search';

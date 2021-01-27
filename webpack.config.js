@@ -3,24 +3,19 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
-  entry: './src/index.tsx',
+  entry: { main: './src/index.tsx', polyfills: './src/polyfills.tsx' },
   mode: 'production',
   target: 'web',
+  externals: {
+    react: 'React',
+    'react-dom': 'ReactDOM',
+    'react-router': 'ReactRouter',
+  },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-      {
-        test: /\.(s*)css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'postcss-loader',
-          'sass-loader',
-        ],
         exclude: /node_modules/,
       },
     ],
@@ -29,13 +24,8 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
   },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new MiniCssExtractPlugin({
-      filename: '[name].css',
-    }),
-  ],
+  plugins: [new CleanWebpackPlugin()],
 };
