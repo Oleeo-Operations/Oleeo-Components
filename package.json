@@ -18,15 +18,14 @@
     "build:watch": "webpack -w",
     "lint": "eslint .",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "deploy": "aws s3 cp ./dist/bundle.js s3://oleeo-careers-site/bundle.js --acl public-read"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
   },
   "browserslist": {
     "production": [
-      ">0.2%",
+      ">0.02%",
       "not op_mini all"
     ],
     "development": [
