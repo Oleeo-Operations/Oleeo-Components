@@ -2,7 +2,7 @@ const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
-  entry: { main: './src/index.tsx', polyfills: './src/polyfills.tsx' },
+  entry: { main: './src/index.tsx' },
   mode: 'production',
   target: 'web',
   externals: {
@@ -30,7 +30,14 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env'],
+              presets: [
+                [
+                  '@babel/preset-env',
+                  {
+                    useBuiltIns: 'entry',
+                  },
+                ],
+              ],
             },
           },
         ],
