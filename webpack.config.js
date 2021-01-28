@@ -23,11 +23,17 @@ module.exports = {
           },
           { loader: 'ts-loader' },
         ],
-        exclude: /node_modules/,
       },
       {
         test: /\.(jsx?)$/,
-        loaders: ['babel-loader'],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env'],
+            },
+          },
+        ],
       },
     ],
   },
