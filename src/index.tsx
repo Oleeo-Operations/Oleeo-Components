@@ -1,5 +1,5 @@
 // Polyfills
-import 'core-js';
+import '@babel/polyfill';
 
 import VacancyListing from './components/vacancy-listing';
 import HomepageTiles from './components/homepage-tiles';
