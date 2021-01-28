@@ -1,3 +1,5 @@
+import 'core-js'; // Polyfills
+
 import VacancyListing from './components/vacancy-listing';
 import HomepageTiles from './components/homepage-tiles';
 import Search from './components/search';
