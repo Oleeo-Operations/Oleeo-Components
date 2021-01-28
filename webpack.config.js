@@ -13,7 +13,6 @@ module.exports = {
   module: {
     rules: [
       {
-        exclude: /node_modules/,
         test: /\.tsx?$/,
         use: [
           {
@@ -31,6 +30,25 @@ module.exports = {
             },
           },
           { loader: 'ts-loader' },
+        ],
+      },
+      {
+        test: /\.(jsx?)$/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                [
+                  '@babel/preset-env',
+                  {
+                    useBuiltIns: 'entry',
+                    corejs: 3,
+                  },
+                ],
+              ],
+            },
+          },
         ],
       },
     ],
