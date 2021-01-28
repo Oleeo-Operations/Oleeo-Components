@@ -1,4 +1,6 @@
-import 'core-js'; // Polyfills
+// Polyfills
+import 'core-js';
+import 'regenerator-runtime/runtime';
 
 import VacancyListing from './components/vacancy-listing';
 import HomepageTiles from './components/homepage-tiles';

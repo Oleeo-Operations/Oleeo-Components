@@ -18,7 +18,15 @@ module.exports = {
           {
             loader: 'babel-loader',
             options: {
-              presets: ['@babel/preset-env'],
+              presets: [
+                [
+                  '@babel/preset-env',
+                  {
+                    useBuiltIns: 'entry',
+                    corejs: 3,
+                  },
+                ],
+              ],
             },
           },
           { loader: 'ts-loader' },
@@ -35,6 +43,7 @@ module.exports = {
                   '@babel/preset-env',
                   {
                     useBuiltIns: 'entry',
+                    corejs: 3,
                   },
                 ],
               ],
