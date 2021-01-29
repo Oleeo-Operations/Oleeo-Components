@@ -55655,7 +55655,13 @@ var CacheService = function () {
       expiry: Date.now() + this.cacheExpiry
     };
     this.cache.set(url, cacheEntry);
+    console.log({
+      cacheEntry: cacheEntry
+    });
     localStorage.setItem(url, JSON.stringify(cacheEntry));
+    console.log({
+      fromStorage: localStorage.getItem(url)
+    });
   };
 
   return CacheService;

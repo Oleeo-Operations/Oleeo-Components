@@ -48,7 +48,9 @@ class CacheService {
       expiry: Date.now() + this.cacheExpiry,
     };
     this.cache.set(url, cacheEntry);
+    console.log({ cacheEntry });
     localStorage.setItem(url, JSON.stringify(cacheEntry));
+    console.log({ fromStorage: localStorage.getItem(url) });
   }
 }
 
