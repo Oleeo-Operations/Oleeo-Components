@@ -55741,7 +55741,7 @@ var HttpService = function () {
 
       return response;
     });
-    console.log(this.axios);
+    console.log(this.axios.interceptors);
   }
 
   HttpService.prototype.get = function (url, config) {
