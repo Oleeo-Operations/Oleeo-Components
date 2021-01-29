@@ -55695,10 +55695,6 @@ var HttpService = function () {
 
     this.axios = axios_1.default.create();
     this.axios.interceptors.request.use(function (request) {
-      console.log({
-        request: request
-      });
-
       var url = _this.axios.getUri(request);
 
       if (request.method.toLowerCase() !== 'get') {
@@ -55729,12 +55725,10 @@ var HttpService = function () {
       return request;
     });
     this.axios.interceptors.response.use(function (response) {
-      console.log({
-        response: response
-      });
-
       if (response.request.responseURL) {
         cache_service_1.default.add(response.request.responseURL, response);
+      } else if (response.config.url) {
+        cache_service_1.default.add(response.config.url, response);
       }
 
       return response;

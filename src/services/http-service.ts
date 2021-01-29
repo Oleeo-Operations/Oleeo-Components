@@ -14,8 +14,6 @@ class HttpService {
 
   constructor() {
     this.axios.interceptors.request.use((request) => {
-      console.log({ request });
-
       const url = this.axios.getUri(request);
 
       if (request.method.toLowerCase() !== 'get') {
@@ -45,9 +43,10 @@ class HttpService {
     });
 
     this.axios.interceptors.response.use((response: AxiosResponse) => {
-      console.log({ response });
       if (response.request.responseURL) {
         cacheService.add(response.request.responseURL, response);
+      } else if (response.config.url) {
+        cacheService.add(response.config.url, response);
       }
       return response;
     });
