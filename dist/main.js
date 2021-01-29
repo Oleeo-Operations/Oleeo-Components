@@ -55604,6 +55604,10 @@ var homepage_tiles_1 = __importDefault(__webpack_require__(/*! ./components/home
 
 var search_1 = __importDefault(__webpack_require__(/*! ./components/search */ "./src/components/search.tsx"));
 
+if (!Element.prototype.matches) {
+  Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+}
+
 window.oleeo = {
   VacancyListing: vacancy_listing_1.default,
   HomepageTiles: homepage_tiles_1.default,
