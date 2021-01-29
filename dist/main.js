@@ -55637,6 +55637,7 @@ var CacheService = function () {
   }
 
   CacheService.prototype.get = function (url) {
+    console.log(this.cache);
     console.log(this.cache.get(url));
     console.log(JSON.parse(localStorage.getItem(url)));
 
