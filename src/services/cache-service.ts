@@ -25,6 +25,8 @@ class CacheService {
    * @return {*}  {CacheEntry}
    */
   public get(url: string): CacheEntry {
+    console.log(this.cache.get(url));
+    console.log(JSON.parse(localStorage.getItem(url)));
     // TODO: Match on params too
     if (!this.cache.get(url)) {
       return JSON.parse(localStorage.getItem(url));
