@@ -48,6 +48,7 @@ class HttpService {
       }
       return response;
     });
+    console.log(this.axios);
   }
 
   public get<T>(url: string, config: AxiosRequestConfig = {}): Observable<T> {
