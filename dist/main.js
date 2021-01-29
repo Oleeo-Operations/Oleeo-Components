@@ -55637,10 +55637,6 @@ var CacheService = function () {
   }
 
   CacheService.prototype.get = function (url) {
-    console.log(this.cache);
-    console.log(this.cache.get(url));
-    console.log(JSON.parse(localStorage.getItem(url)));
-
     if (!this.cache.get(url)) {
       return JSON.parse(localStorage.getItem(url));
     }
@@ -55655,13 +55651,7 @@ var CacheService = function () {
       expiry: Date.now() + this.cacheExpiry
     };
     this.cache.set(url, cacheEntry);
-    console.log({
-      cacheEntry: cacheEntry
-    });
     localStorage.setItem(url, JSON.stringify(cacheEntry));
-    console.log({
-      fromStorage: localStorage.getItem(url)
-    });
   };
 
   return CacheService;

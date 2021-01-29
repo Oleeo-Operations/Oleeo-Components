@@ -25,9 +25,6 @@ class CacheService {
    * @return {*}  {CacheEntry}
    */
   public get(url: string): CacheEntry {
-    console.log(this.cache);
-    console.log(this.cache.get(url));
-    console.log(JSON.parse(localStorage.getItem(url)));
     // TODO: Match on params too
     if (!this.cache.get(url)) {
       return JSON.parse(localStorage.getItem(url));
@@ -48,9 +45,7 @@ class CacheService {
       expiry: Date.now() + this.cacheExpiry,
     };
     this.cache.set(url, cacheEntry);
-    console.log({ cacheEntry });
     localStorage.setItem(url, JSON.stringify(cacheEntry));
-    console.log({ fromStorage: localStorage.getItem(url) });
   }
 }
 
