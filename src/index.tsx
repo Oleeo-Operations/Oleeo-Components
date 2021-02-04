@@ -1,6 +1,16 @@
+// Polyfills
+import '@babel/polyfill';
 import VacancyListing from './components/vacancy-listing';
 import HomepageTiles from './components/homepage-tiles';
 import Search from './components/search';
+
+declare const Element: any;
+
+if (!Element.prototype.matches) {
+  Element.prototype.matches =
+    Element.prototype.msMatchesSelector ||
+    Element.prototype.webkitMatchesSelector;
+}
 
 declare let window: any;
 
