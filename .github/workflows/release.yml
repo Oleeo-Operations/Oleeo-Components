@@ -12,10 +12,22 @@ jobs:
     runs-on: 'ubuntu-latest'
 
     steps:
-      - uses: 'marvinpinto/action-automatic-releases@latest'
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
+        with:
+          persist-credentials: false
+
+      - name: Install and Build 🔧
+        run: |
+          npm install
+          npm run build
+
+      - name: 'Release'
+        uses: 'marvinpinto/action-automatic-releases@latest'
         with:
           repo_token: '${{ secrets.GITHUB_TOKEN }}'
           automatic_release_tag: 'latest'
+          prerelease: false
           title: 'Production Build'
           files: |
             dist/*
