@@ -1,6 +1,6 @@
 import React, { KeyboardEvent, useEffect, useState } from 'react';
 import { Subject, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { throttleTime } from 'rxjs/operators';
 import Fuse from 'fuse.js';
 import rssService from '../services/rss-service';
 import { CategoryDetails } from '../types/HomepageTileDetails';
@@ -39,7 +39,7 @@ const Search = (props: SearchProps): JSX.Element => {
 
   const subscribeToSearchInput = (): void => {
     // Subscribe to the searchInput subject and debounce the input by 200ms
-    searchInput.pipe(debounceTime(200)).subscribe({
+    searchInput.pipe(throttleTime(200)).subscribe({
       next: (value: string) => {
         if (value === '') {
           // If the search term is an empty string, hide everything.
