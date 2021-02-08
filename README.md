@@ -27,6 +27,17 @@ E.g. for the HomepageTiles component:
 window.oleeo.HomepageTiles;
 ```
 
+## GitHub Actions
+
+A workflow has been created on GitHub actions to build and release the code when there is a push to the `main` branch. Each push creates a new release, the latest of which which can be accessed on Webflow using:
+
+```html
+<script
+  src="https://cdn.jsdelivr.net/gh/Oleeo-Operations/Oleeo-Components@latest/dist/main.js"
+  async
+></script>
+```
+
 ### HomepageTiles Component
 
 This component renders a "tile" for each job category passed as props, including a background image and a count of how many jobs are available in each category.
