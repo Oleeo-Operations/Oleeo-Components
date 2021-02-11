@@ -66,7 +66,7 @@ const VacancyItem = (props: VacancyItemProps): JSX.Element => {
                 ) : (
                   <span className="item-value">
                     {/* Check if the item is an array, if it is show it as comma separated */}
-                    {item.isArray
+                    {item.isArray && Array.isArray(vacancy.content[item.key])
                       ? vacancy.content[item.key].join(', ')
                       : vacancy.content[item.key]}
                   </span>
