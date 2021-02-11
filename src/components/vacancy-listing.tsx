@@ -120,7 +120,6 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
         <Modal
           handleClose={handleModalClose}
           isOpen={!!activeVacancy}
-          width="75%"
           modalTitle="Vacancy Details"
           modalDescription="View the vacancy details. Click Apply to make an application."
         >

@@ -9,7 +9,6 @@ type ModalProps = {
   children: JSX.Element;
   modalTitle: string;
   modalDescription: string;
-  width: string;
   isOpen: boolean;
   handleClose: () => void;
 };
@@ -21,14 +20,7 @@ type ModalProps = {
  * @return {*}  {JSX.Element}
  */
 const Modal = (props: ModalProps): JSX.Element => {
-  const {
-    children,
-    handleClose,
-    modalTitle,
-    modalDescription,
-    isOpen,
-    width,
-  } = props;
+  const { children, handleClose, modalTitle, modalDescription, isOpen } = props;
 
   let $subscription: Subscription;
 
@@ -57,15 +49,7 @@ const Modal = (props: ModalProps): JSX.Element => {
       <>
         <div
           className="modal-overlay"
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            background: 'rgba(0,0,0,0.4)',
-          }}
-          onClick={($event): void => {
+          onClick={(): void => {
             handleClose();
           }}
         />
@@ -75,21 +59,6 @@ const Modal = (props: ModalProps): JSX.Element => {
           className="modal"
           aria-labelledby="modal-title"
           aria-describedby="modal-description"
-          // Set some default styles for the modal
-          style={{
-            position: 'fixed',
-            left: '50%',
-            top: '50%',
-            height: 'auto',
-            padding: '1rem 2rem',
-            transform: 'translate(-50%, -50%)',
-            border: 'none',
-            boxShadow: '0 8px 20px 0 rgba(0,0,0,0.125)',
-            borderRadius: '4px',
-            maxHeight: '75vh',
-            overflow: 'auto',
-            width,
-          }}
         >
           <FocusTrap focusTrapOptions={{ allowOutsideClick: true }}>
             <div className="modal-contents">
