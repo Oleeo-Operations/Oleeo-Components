@@ -22,11 +22,19 @@ jobs:
           npm install
           npm run build
 
-      - name: Increment Step Minor
-        id: increment-semver-minor
-        uses: Benbentwo/increment-semver@master
+      - id: keydb
+        uses: pozetroninc/github-action-get-latest-release@master
         with:
-          version-level: '-m'
+          owner: Oleeo-Operations
+          repo: Oleeo-Components
+          excludes: prerelease, draft
+
+      - name: Bump release version
+        id: bump_version
+        uses: christian-draeger/increment-semantic-version@1.0.2
+        with:
+          current-version: '${{ steps.keydb.outputs.release }}'
+          version-fragment: 'feature'
 
       - name: 'Release'
         uses: 'marvinpinto/action-automatic-releases@latest'
