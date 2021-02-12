@@ -17,10 +17,7 @@
   "scripts": {
     "build": "webpack",
     "build:watch": "webpack -w",
-    "lint": "eslint .",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "postinstall": "are-you-es5 check -r ."
+    "serve": "webpack-dev-server --open --config webpack.config.dev.js"
   },
   "eslintConfig": {
     "extends": "react-app"
