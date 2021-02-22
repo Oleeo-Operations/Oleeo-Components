@@ -1,8 +1,11 @@
 // Polyfills
 import '@babel/polyfill';
-import VacancyListing from './components/vacancy-listing';
-import HomepageTiles from './components/homepage-tiles';
-import Search from './components/search';
+// Styles
+import './styles/_accessibility.scss';
+
+import VacancyListing from './components/vacancy-listing/vacancy-listing';
+import HomepageTiles from './components/homepage-tiles/homepage-tiles';
+import Search from './components/search/search';
 
 // The below is another polyfill for React
 declare const Element: any;

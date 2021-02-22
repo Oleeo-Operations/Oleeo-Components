@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import rssService from '../services/rss-service';
-import { CategoryDetails } from '../types/HomepageTileDetails';
-import { Vacancy } from '../types/Vacancy';
-import HomepageTile from './homepage-tile';
+import rssService from '../../services/rss-service';
+import { CategoryDetails } from '../../types/HomepageTileDetails';
+import { Vacancy } from '../../types/Vacancy';
+import HomepageTile from '../homepage-tile/homepage-tile';
+import './homepage-tiles.scss';
 
 type HomepageTileProps = {
   tiles: CategoryDetails[];

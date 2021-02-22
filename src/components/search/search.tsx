@@ -2,10 +2,10 @@ import React, { KeyboardEvent, useEffect, useState } from 'react';
 import { Subject, Subscription } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
 import Fuse from 'fuse.js';
-import rssService from '../services/rss-service';
-import { CategoryDetails } from '../types/HomepageTileDetails';
-import { Vacancy } from '../types/Vacancy';
-import SearchResults from './search-results';
+import rssService from '../../services/rss-service';
+import { CategoryDetails } from '../../types/HomepageTileDetails';
+import { Vacancy } from '../../types/Vacancy';
+import SearchResults from '../search-results/search-results';
 
 type SearchProps = {
   feedURL: string;

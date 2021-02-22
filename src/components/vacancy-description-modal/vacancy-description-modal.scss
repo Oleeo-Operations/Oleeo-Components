@@ -1,0 +1,31 @@
+@import '../../styles/mixins';
+
+.vacancy-item {
+  .vacancy-title {
+  }
+  .apply-button {
+    margin: 1rem 0;
+  }
+  .vacancy-information {
+    display: flex;
+    flex-wrap: wrap;
+    .vacancy-information-column {
+      flex-basis: 100%;
+      padding: 1rem;
+      color: #555;
+      border-bottom: 1px solid #f0f0f0;
+      @include breakpoint(md) {
+        flex-basis: 50%;
+      }
+      .vacancy-info-key {
+        font-size: 0.85rem;
+        font-style: italic;
+      }
+      .vacancy-info-value {
+      }
+    }
+  }
+  .vacancy-description {
+    margin-top: 1rem;
+  }
+}

@@ -1,6 +1,6 @@
 import React from 'react';
-import { CategoryDetails } from '../types/HomepageTileDetails';
-import VacancyCount from './vacancy-count';
+import { CategoryDetails } from '../../types/HomepageTileDetails';
+import VacancyCount from '../vacancy-count/vacancy-count';
 
 type HomepageTileProps = {
   details: CategoryDetails;
