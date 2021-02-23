@@ -4,6 +4,7 @@
 import FocusTrap from 'focus-trap-react';
 import React, { useEffect } from 'react';
 import { fromEvent, Subscription } from 'rxjs';
+import './modal.scss';
 
 type ModalProps = {
   children: JSX.Element;
@@ -79,6 +80,11 @@ const Modal = (props: ModalProps): JSX.Element => {
                     className="modal-close btn btn-round"
                     ref={(el): void => {
                       closeButton = el;
+                    }}
+                    style={{
+                      padding: '0.5rem',
+                      background: 'transparent',
+                      borderRadius: '100%',
                     }}
                   >
                     <span className="icon" aria-hidden="true">

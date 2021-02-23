@@ -1,6 +1,6 @@
 import React from 'react';
-import { CategoryDetails } from '../types/HomepageTileDetails';
-import { Vacancy } from '../types/Vacancy';
+import { CategoryDetails } from '../../types/HomepageTileDetails';
+import { Vacancy } from '../../types/Vacancy';
 
 type SearchResultsProps = {
   categories: CategoryDetails[];

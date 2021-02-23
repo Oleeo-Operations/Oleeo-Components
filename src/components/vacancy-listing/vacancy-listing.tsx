@@ -1,11 +1,12 @@
 import React, { MouseEvent, useEffect, useState } from 'react';
 import { Subscription } from 'rxjs';
-import RssService from '../services/rss-service';
-import VacancyItem from './vacancy-item';
-import Loader from './loader/loader';
-import VacancyDescriptionModal from './vacancy-description-modal';
-import { Vacancy } from '../types/Vacancy';
-import Modal from './modal';
+import RssService from '../../services/rss-service';
+import VacancyItem from '../vacancy-item/vacancy-item';
+import Loader from '../loader/loader';
+import VacancyDescriptionModal from '../vacancy-description-modal/vacancy-description-modal';
+import { Vacancy } from '../../types/Vacancy';
+import Modal from '../modal/modal';
+import './vacancy-listing.scss';
 
 type VacancyListingProps = {
   feedURL: string;

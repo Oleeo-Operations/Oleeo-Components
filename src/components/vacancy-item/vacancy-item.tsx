@@ -1,5 +1,5 @@
 import React, { MouseEvent } from 'react';
-import { Vacancy } from '../types/Vacancy';
+import { Vacancy } from '../../types/Vacancy';
 
 type VacancyItemProps = {
   vacancy: Vacancy;

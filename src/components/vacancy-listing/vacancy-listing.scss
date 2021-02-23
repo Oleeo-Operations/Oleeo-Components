@@ -1,0 +1,46 @@
+@import '../../styles/mixins';
+
+.vacancy-listing {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  @include breakpoint(md) {
+    justify-content: space-between;
+  }
+  .vacancy-item {
+    width: calc(100% - 1rem);
+    margin-top: 1rem;
+    @include breakpoint(md) {
+      width: calc(50% - 1rem);
+    }
+    .vacancy-item-content {
+      box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.125);
+      height: 100%;
+      background-color: #fff;
+      padding: 1rem;
+    }
+    .vacancy-title,
+    .vacancy-title button {
+      margin: 0;
+      font-size: 1.75rem;
+      line-height: 1.5;
+      .vacancy-title-link {
+        background: transparent;
+        border: none;
+        padding: 0;
+        text-align: left;
+      }
+    }
+    .vacancy-info-item {
+      margin: 0.5rem 0;
+      .item-title {
+        font-weight: bold;
+      }
+      .item-value {
+        display: inline-block;
+        margin-left: 0.25rem;
+      }
+    }
+  }
+}

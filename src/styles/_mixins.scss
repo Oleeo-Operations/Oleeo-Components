@@ -1,0 +1,25 @@
+$breakpoints: (
+  'xs': '320px',
+  'sm': '480px',
+  'md': '768px',
+  'lg': '990px',
+  'xl': '1200px',
+);
+
+@mixin breakpoint($breakpoint) {
+  // If the key exists in the map
+  @if map-has-key($breakpoints, $breakpoint) {
+    // Prints a media query based on the value
+    @media (min-width: map-get($breakpoints, $breakpoint)) {
+      @content;
+    }
+  } @else {
+    @media screen and (min-width: $breakpoint) {
+      @content;
+    }
+  }
+}
+
+body {
+  background: red im !important;
+}

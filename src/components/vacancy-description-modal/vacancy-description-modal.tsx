@@ -1,5 +1,6 @@
 import React from 'react';
-import { Vacancy } from '../types/Vacancy';
+import { Vacancy } from '../../types/Vacancy';
+import './vacancy-description-modal.scss';
 
 type VacancyDescriptionModalProps = {
   vacancy: Vacancy;
