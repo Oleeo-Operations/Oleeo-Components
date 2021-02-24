@@ -1,4 +1,4 @@
-#  Oleeo React Components
+# Oleeo React Components
 
 This project exposes components for use on Oleeo Careers Sites.
 
@@ -19,23 +19,18 @@ These components all require React and ReactDOM scripts to be added to the `<hea
 
 **Note**: only version 17 of React and ReactDOM have been tested.
 
+The component source code can be accessed using jsDelivr. A script tag must be added into the `<head>` of the pages which are to contain the components. To access the latest version, use:
+
+```html
+<script src="https://cdn.jsdelivr.net/gh/Oleeo-Operations/Oleeo-Components@0/dist/main.js"></script>
+```
+
 All components have been assigned to the `window.oleeo` object and can be accessed from there.
 
 E.g. for the HomepageTiles component:
 
 ```javascript
 window.oleeo.HomepageTiles;
-```
-
-## GitHub Actions
-
-A workflow has been created on GitHub actions to build and release the code when there is a push to the `main` branch. Each push creates a new release, the latest of which which can be accessed on Webflow using:
-
-```html
-<script
-  src="https://cdn.jsdelivr.net/gh/Oleeo-Operations/Oleeo-Components@latest/dist/main.js"
-  async
-></script>
 ```
 
 ### HomepageTiles Component
@@ -144,12 +139,12 @@ This component renders a "card" for each job available. Includes configurable pr
 
 #### Schema
 
-| **Item** | **Type** | **Description**                                                                                                            |
-| -------- | -------- | -------------------------------------------------------------------------------------------------------------------------- |
-| key      | string   | The key for the item in the RSS feed. The component will look inside the content tag to find this item.                    |
-| label    | string   | The label to display before the value.                                                                                     |
-| isArray  | boolean  | Whether or not the item is an Array. If it is, it automatically includes each item in a comma separated list.              |
-| isHTML   | boolean  | Whether or not the item contains raw HTML. This should be used with caution as it allows the content to be rendered as is. |
+| **Item** | **Type** | **Description**                                                                                                                                            |
+| -------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| key      | string   | The key for the item in the RSS feed. The component will look inside the content tag to find this item.                                                    |
+| label    | string   | The label to display before the value.                                                                                                                     |
+| isArray  | boolean  | Whether or not the item is an Array. If it is, it automatically includes each item in a comma separated list.                                              |
+| isHTML   | boolean  | Whether or not the item contains raw HTML. This should be used with caution as it allows the content to be rendered as is using `dangerouslySetInnerHTML`. |
 
 ### Search
 
@@ -183,6 +178,19 @@ The project is configured to include polyfills so that it works on older version
 ## Accessibility
 
 The components have been created to be fully compliant with Web Content Accessibility Guidelines (WCAG) level AA.
+
+## GitHub Actions
+
+A workflow has been created on GitHub actions to build and release the code when there is a push to the `main` branch. Each push creates a new release, the latest of which which can be accessed on Webflow using:
+
+```html
+<script
+  src="https://cdn.jsdelivr.net/gh/Oleeo-Operations/Oleeo-Components@latest/dist/main.js"
+  async
+></script>
+```
+
+**Note:** Currently, the components must still be built locally using `npm run build` prior to being pushed to GitHub.
 
 ## Key Contacts
 
