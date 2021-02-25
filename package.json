@@ -1,5 +1,5 @@
 {
-  "name": "react-test",
+  "name": "Oleeo ",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -17,8 +17,7 @@
   "scripts": {
     "build": "webpack",
     "build:watch": "webpack -w",
-    "serve": "webpack-dev-server --open --config webpack.config.dev.js",
-    "postinstall": "husky install"
+    "serve": "webpack-dev-server --open --config webpack.config.dev.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -55,7 +54,6 @@
     "eslint-plugin-react": "^7.21.5",
     "eslint-plugin-react-hooks": "^4.2.0",
     "html-webpack-plugin": "^4.5.0",
-    "husky": "^5.1.1",
     "mini-css-extract-plugin": "^0.11.3",
     "node-sass": "^5.0.0",
     "postcss": "^8.1.10",

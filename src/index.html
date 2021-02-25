@@ -21,7 +21,7 @@
   </head>
   <body>
     <script>
-      const directorates = [
+      const jobCategories = [
         {
           name: 'Adults, Housing &amp; Health',
           slug: 'adults-housing-health',
@@ -85,7 +85,23 @@
           React.createElement(window.oleeo.Search, {
             feedURL:
               'https://kirklees.tal.net/vx/mobile-0/appcentre-1/brand-4/candidate/jobboard/vacancy/4/feed/structured',
-            categories: directorates,
+            categories: jobCategories,
+            fuzzySearchThreshold: 0.5,
+            fuzzySearchKeys: ['title'],
+            propertiesToDisplay: [
+              {
+                key: 'directorate',
+                label: 'Directorate: ',
+                isArray: false,
+                isHTML: true,
+              },
+              {
+                key: 'service_area',
+                label: 'Service Area: ',
+                isArray: false,
+                isHTML: true,
+              },
+            ],
           }),
           document.getElementById('homepage-vacancy-search')
         );
@@ -98,7 +114,7 @@
           React.createElement(window.oleeo.HomepageTiles, {
             feedURL:
               'https://kirklees.tal.net/vx/mobile-0/appcentre-1/brand-4/candidate/jobboard/vacancy/4/feed/structured',
-            tiles: directorates,
+            tiles: jobCategories,
             countField: 'directorate',
           }),
           document.getElementById('homepage-vacancy-tiles')

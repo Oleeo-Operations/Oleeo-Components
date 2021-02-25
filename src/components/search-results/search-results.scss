@@ -1,0 +1,69 @@
+.search-results-overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.125);
+  backdrop-filter: blur(0.2px);
+}
+.search-results {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
+  max-height: 300px;
+  overflow-y: scroll;
+  z-index: 999;
+  .search-result-categories {
+    .search-result-categories-list {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .search-result-category {
+      flex-basis: 50%;
+      flex-grow: 2;
+      padding: 1rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      a {
+        color: #333;
+        text-decoration: none;
+      }
+    }
+  }
+  .search-result-vacancies {
+    .search-result-vacancy-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .search-result-vacancy {
+      padding: 1rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      .vacancy-title {
+        font-size: 1.4rem;
+        margin-bottom: 0.25rem;
+        display: block;
+      }
+      a {
+        color: #333;
+        text-decoration: none;
+      }
+      .vacancy-property {
+        display: flex;
+        margin: 0.25rem 0;
+        .property-title {
+          font-weight: bold;
+        }
+        .property-value {
+          margin-left: 0.25rem;
+        }
+      }
+    }
+  }
+}
