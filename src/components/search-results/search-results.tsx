@@ -24,7 +24,6 @@ type SearchResultsProps = {
 /**
  * A component to display the results of the search.
  * Displays categories and vacancies which contain the search term.
- * TODO: Think about using a fuzzy search package to improve the results.
  * @param {SearchResultsProps} props
  * @return {*}  {JSX.Element}
  */
@@ -47,12 +46,14 @@ const SearchResults = (props: SearchResultsProps): JSX.Element => {
   const handleKeyUp = (
     $event: KeyboardEvent | React.KeyboardEvent<HTMLDivElement>
   ): void => {
+    // Close the search results box if the 'Escape' key is pressed and it's open.
     if ($event.key === 'Escape' && isActive) {
       handleClose();
     }
   };
 
   useEffect(() => {
+    // Setup an event listener on the window object
     $KeyupSubscription = fromEvent(window, 'keyup').subscribe({
       next: ($event: KeyboardEvent): void => {
         handleKeyUp($event);
@@ -60,6 +61,7 @@ const SearchResults = (props: SearchResultsProps): JSX.Element => {
     });
 
     return (): void => {
+      // Return a cleanup function which unsubscribes our observables.
       if ($KeyupSubscription) {
         $KeyupSubscription.unsubscribe();
       }
@@ -70,6 +72,7 @@ const SearchResults = (props: SearchResultsProps): JSX.Element => {
     <>
       {(categories.length > 0 || vacancies.length > 0) && isActive && (
         <>
+          {/* Create an overlay so a user can easily click away from this */}
           <div
             className="search-results-overlay"
             onClick={(): void => handleOverlayClick()}
@@ -79,12 +82,15 @@ const SearchResults = (props: SearchResultsProps): JSX.Element => {
             aria-label="Close search results (press Escape or click to close)"
           />
           <div className="search-results">
+            {/* Accessibility is important! We announce to screen-reader users that there has been a change. */}
             <p className="sr-only" aria-live="polite">
               {categories.length} categories and {vacancies.length} vacancies
-              found matching current search term (&quot;{searchTerm}&quot;)
+              found matching current search term (&quot;{searchTerm}&quot;). See
+              below for matching results.
             </p>
             <div className="search-result-categories">
               <ul className="search-result-categories-list">
+                {/* Loop through the categories the fuzzySearch found */}
                 {categories.map((category) => (
                   <li key={category.name} className="search-result-category">
                     <a
@@ -97,6 +103,7 @@ const SearchResults = (props: SearchResultsProps): JSX.Element => {
             </div>
             <div className="search-result-vacancies">
               <ul className="search-result-vacancy-list">
+                {/* Loop through the vacancies the fuzzySearch found */}
                 {vacancies.map((vacancy) => (
                   <li className="search-result-vacancy" key={vacancy.id}>
                     <a href={vacancy.id}>
@@ -111,6 +118,7 @@ const SearchResults = (props: SearchResultsProps): JSX.Element => {
                           </span>
                         </div>
                         <div className="vacancy-properties">
+                          {/* This is stolen from the VacancyListing component  */}
                           {propertiesToDisplay.map((property) => {
                             if (!vacancy.content[property.key]) {
                               return null;

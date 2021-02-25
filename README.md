@@ -157,19 +157,44 @@ A component to display a search bar in which a user can search for vacancies or 
 ```html
 <div id="homepage-vacancy-search"></div>
 <script>
-  console.log(directorates);
   window.addEventListener('load', () => {
     ReactDOM.render(
       React.createElement(window.oleeo.Search, {
         feedURL:
           'https://kirklees.tal.net/vx/mobile-0/appcentre-1/brand-4/candidate/jobboard/vacancy/4/feed/structured',
-        categories: directorates,
+        categories: jobCategories,
+        fuzzySearchThreshold: 0.5,
+        fuzzySearchKeys: ['title'],
+        propertiesToDisplay: [
+          {
+            key: 'directorate',
+            label: 'Directorate: ',
+            isArray: false,
+            isHTML: true,
+          },
+          {
+            key: 'service_area',
+            label: 'Service Area: ',
+            isArray: false,
+            isHTML: true,
+          },
+        ],
       }),
       document.getElementById('homepage-vacancy-search')
     );
   });
 </script>
 ```
+
+#### Params
+
+| **Name**             | **Description**                                                                                                                                                                     |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| feedURL              | The URL of the structured RSS Feed from which jobs can be pulled.                                                                                                                   |
+| categories           | An array of objects containing the name of each job category. If you're using the HomepageTiles component, this can use the same array as the tiles parameter.                      |
+| fuzzySearchThreshold | A float between 0 and 1. A threshold of 0.0 requires a perfect match, a threshold of 1.0 would match anything.                                                                      |
+| fuzzySearchFields    | An array of strings which map to items in the RSS Feed against which to perform the fuzzy search. E.g. ['title', 'content.Job_id'] would look at the title and Job_id.              |
+| propertiesToDisplay  | An array of objects which determine which fields are displayed in the vacancy search result. Follows the same schema as the VacancyListing component propertiesToDisplay parameter. |
 
 ## Cross Browser Compatibility
 

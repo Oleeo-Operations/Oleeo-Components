@@ -4,6 +4,8 @@
 import FocusTrap from 'focus-trap-react';
 import React, { useEffect } from 'react';
 import { fromEvent, Subscription } from 'rxjs';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import './modal.scss';
 
 type ModalProps = {
@@ -32,7 +34,7 @@ const Modal = (props: ModalProps): JSX.Element => {
       // Focus the first button (the close button) when the modal window opens
       closeButton.focus();
     }
-    // For accessibility reasons, we need to close the Modal when the escape key is pressed.
+    // Accessibility is important! We need to close the Modal when the escape key is pressed.
     $subscription = fromEvent(document, 'keyup').subscribe(
       ($event: KeyboardEvent) => {
         if ($event.key === 'Escape') {
@@ -42,7 +44,11 @@ const Modal = (props: ModalProps): JSX.Element => {
       }
     );
     // Return a cleanup function which unsubscribes
-    return (): void => $subscription.unsubscribe();
+    return (): void => {
+      if ($subscription) {
+        $subscription.unsubscribe();
+      }
+    };
   }, []);
 
   return (
@@ -81,15 +87,9 @@ const Modal = (props: ModalProps): JSX.Element => {
                     ref={(el): void => {
                       closeButton = el;
                     }}
-                    style={{
-                      padding: '0.5rem',
-                      background: 'transparent',
-                      borderRadius: '100%',
-                    }}
                   >
-                    <span className="icon" aria-hidden="true">
-                      &#x274C;
-                    </span>
+                    {/* Add a cross icon. People should know that means close. */}
+                    <FontAwesomeIcon icon={faTimes} />
                     <span className="sr-only">Close Dialog</span>
                   </button>
                 </div>

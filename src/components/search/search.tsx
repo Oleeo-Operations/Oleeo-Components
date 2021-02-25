@@ -1,7 +1,7 @@
 import React, { KeyboardEvent, useEffect, useState } from 'react';
 import { Subject, Subscription } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
-import Fuse from 'fuse.js';
+import Fuse from 'fuse.js/';
 import rssService from '../../services/rss-service';
 import { CategoryDetails } from '../../types/HomepageTileDetails';
 import { Vacancy } from '../../types/Vacancy';
@@ -23,7 +23,10 @@ type SearchProps = {
   fuzzySearchKeys: string[];
 };
 
-let vacancyFuzzSearcher: Fuse<Vacancy>;
+// The FuseJS Fuzzy Searcher for Vacancies
+let vacancyFuzzySearcher: Fuse<Vacancy>;
+
+// The FuseJS Fuzzy Searcher for Categories
 let categoryFuzzySearcher: Fuse<CategoryDetails>;
 
 /**
@@ -40,23 +43,28 @@ const Search = (props: SearchProps): JSX.Element => {
     propertiesToDisplay,
   } = props;
 
+  // An RxJS Subject for the searchInput. This will emit after data has been entered into the input.
   const searchInput: Subject<string> = new Subject();
 
+  // Create some RxJS Subscriptions. These will be initialised later.
   let $RssSubscription: Subscription;
   let $KeyupSubscription: Subscription;
 
-  const [vacancies, setVacancies] = useState<Vacancy[]>([]);
-
+  // A state variable for the latestSearchTerm
   const [latestSearchTerm, setLatestSearchTerm] = useState<string>('');
 
+  // A state variable for the Vacancies which the Fuzzy Search returns
   const [searchResultVacancies, setSearchResultVacancies] = useState<Vacancy[]>(
     []
   );
 
+  // A state variable for the Categories which the Fuzzy Search returns
   const [searchResultCategories, setSearchResultCategories] = useState<
     CategoryDetails[]
   >([]);
 
+  // A state variable for whether the results dropdown is active.
+  // TODO: Maybe consider not using a boolean flag.
   const [searchResultsActive, setSearchResultsActive] = useState<boolean>(
     false
   );
@@ -70,23 +78,25 @@ const Search = (props: SearchProps): JSX.Element => {
           setSearchResultVacancies(() => []);
           setSearchResultCategories(() => []);
           setSearchResultsActive(false);
+          return;
+        }
+        if (vacancyFuzzySearcher && categoryFuzzySearcher) {
+          setSearchResultsActive(true); // Show the dropdown thingy
+          setLatestSearchTerm(value); // Set the value to the term.
+          // Run the vacancyFuzzySearcher and update the state variable
+          setSearchResultVacancies(() => [
+            ...(vacancyFuzzySearcher
+              .search(value)
+              .map((result) => result.item) as Vacancy[]),
+          ]);
+          // Run the category and update the state variable
+          setSearchResultCategories((): CategoryDetails[] => [
+            ...(categoryFuzzySearcher
+              .search(value)
+              .map((result) => result.item) as CategoryDetails[]),
+          ]);
         } else {
-          if (vacancyFuzzSearcher) {
-            setSearchResultsActive(true);
-            setLatestSearchTerm(value); // Set the value to the term.
-            setSearchResultVacancies(() => [
-              ...(vacancyFuzzSearcher
-                .search(value)
-                .map((result) => result.item) as Vacancy[]),
-            ]);
-          }
-          if (categoryFuzzySearcher) {
-            setSearchResultCategories((): CategoryDetails[] => [
-              ...(categoryFuzzySearcher
-                .search(value)
-                .map((result) => result.item) as CategoryDetails[]),
-            ]);
-          }
+          console.warn('Tried to search but there were no FuzzySearchers');
         }
       },
     });
@@ -97,26 +107,28 @@ const Search = (props: SearchProps): JSX.Element => {
       subscribeToSearchInput(); // If this doesn't already exist, do this here.
     }
     const target = $event.target as HTMLInputElement; // Cast it to a HTMLInputElement to be able to access value.
-    searchInput.next(target.value);
+    // TODO: Perform some validation on this.
+    searchInput.next(target.value); // Emit the value of the search input
   };
 
   /**
    * Do the usual and get the vacancies from the RSS Feed.
+   * TODO: Add in some error handling
    */
   const getVacanciesFromRSS = (): void => {
     $RssSubscription = rssService.getFeed(feedURL).subscribe({
       next: (response) => {
-        vacancyFuzzSearcher = new Fuse(response, {
+        vacancyFuzzySearcher = new Fuse(response, {
           keys: fuzzySearchKeys,
-          threshold: fuzzSearchThreshold || 0.4,
+          threshold: fuzzSearchThreshold || 0.6,
         });
-        setVacancies(response);
       },
     });
   };
 
   const handleSearchResultClose = (): void => {
-    console.log('CLOSING SEARCH RESULTS');
+    // This function is passed as a prop to the SearchResults component.
+    // It is called whenever a user presses 'Escape' or clicks on the overlay.
     setSearchResultsActive(false);
   };
 
@@ -133,7 +145,7 @@ const Search = (props: SearchProps): JSX.Element => {
         $RssSubscription.unsubscribe();
       }
       if ($KeyupSubscription) {
-        $KeyupSubscription.unsubscribe(); // If this doesn't already exist, do this here.
+        $KeyupSubscription.unsubscribe();
       }
     };
   }, []);
@@ -141,8 +153,9 @@ const Search = (props: SearchProps): JSX.Element => {
   return (
     <div className="vacancy-search">
       <div className="search-input">
+        {/* Accessibility is important! We include a label, but hide it visually. */}
         <label htmlFor="search" className="sr-only">
-          Search for your role
+          Search for a job. Results will appear when you type.
         </label>
         <input
           type="text"
