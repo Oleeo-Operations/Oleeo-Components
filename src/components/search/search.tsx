@@ -6,10 +6,21 @@ import rssService from '../../services/rss-service';
 import { CategoryDetails } from '../../types/HomepageTileDetails';
 import { Vacancy } from '../../types/Vacancy';
 import SearchResults from '../search-results/search-results';
+import './search.scss';
 
 type SearchProps = {
   feedURL: string;
   categories: CategoryDetails[];
+  propertiesToDisplay: [
+    {
+      key: string;
+      label: string;
+      isArray: boolean;
+      isHTML: boolean;
+    }
+  ];
+  fuzzSearchThreshold: number;
+  fuzzySearchKeys: string[];
 };
 
 let vacancyFuzzSearcher: Fuse<Vacancy>;
@@ -21,7 +32,13 @@ let categoryFuzzySearcher: Fuse<CategoryDetails>;
  * @return {*}  {JSX.Element}
  */
 const Search = (props: SearchProps): JSX.Element => {
-  const { feedURL, categories } = props;
+  const {
+    feedURL,
+    categories,
+    fuzzSearchThreshold,
+    fuzzySearchKeys,
+    propertiesToDisplay,
+  } = props;
 
   const searchInput: Subject<string> = new Subject();
 
@@ -29,13 +46,20 @@ const Search = (props: SearchProps): JSX.Element => {
   let $KeyupSubscription: Subscription;
 
   const [vacancies, setVacancies] = useState<Vacancy[]>([]);
+
   const [latestSearchTerm, setLatestSearchTerm] = useState<string>('');
+
   const [searchResultVacancies, setSearchResultVacancies] = useState<Vacancy[]>(
     []
   );
+
   const [searchResultCategories, setSearchResultCategories] = useState<
     CategoryDetails[]
   >([]);
+
+  const [searchResultsActive, setSearchResultsActive] = useState<boolean>(
+    false
+  );
 
   const subscribeToSearchInput = (): void => {
     // Subscribe to the searchInput subject and debounce the input by 200ms
@@ -45,8 +69,10 @@ const Search = (props: SearchProps): JSX.Element => {
           // If the search term is an empty string, hide everything.
           setSearchResultVacancies(() => []);
           setSearchResultCategories(() => []);
+          setSearchResultsActive(false);
         } else {
           if (vacancyFuzzSearcher) {
+            setSearchResultsActive(true);
             setLatestSearchTerm(value); // Set the value to the term.
             setSearchResultVacancies(() => [
               ...(vacancyFuzzSearcher
@@ -81,19 +107,24 @@ const Search = (props: SearchProps): JSX.Element => {
     $RssSubscription = rssService.getFeed(feedURL).subscribe({
       next: (response) => {
         vacancyFuzzSearcher = new Fuse(response, {
-          keys: ['title'],
-          threshold: 0.4,
+          keys: fuzzySearchKeys,
+          threshold: fuzzSearchThreshold || 0.4,
         });
         setVacancies(response);
       },
     });
   };
 
+  const handleSearchResultClose = (): void => {
+    console.log('CLOSING SEARCH RESULTS');
+    setSearchResultsActive(false);
+  };
+
   useEffect(() => {
     getVacanciesFromRSS();
     categoryFuzzySearcher = new Fuse(categories, {
       keys: ['name'],
-      threshold: 0.4,
+      threshold: fuzzSearchThreshold || 0.4,
     });
     // Return a cleanup function.
     return (): void => {
@@ -108,15 +139,15 @@ const Search = (props: SearchProps): JSX.Element => {
   }, []);
 
   return (
-    <div id="vacancy-search">
+    <div className="vacancy-search">
       <div className="search-input">
         <label htmlFor="search" className="sr-only">
-          Search
+          Search for your role
         </label>
         <input
           type="text"
           name="search"
-          id="search-input"
+          className="vacancy-search-input"
           placeholder="Find your role"
           onKeyUp={handleKeyup}
         />
@@ -125,6 +156,9 @@ const Search = (props: SearchProps): JSX.Element => {
         categories={searchResultCategories}
         vacancies={searchResultVacancies}
         searchTerm={latestSearchTerm}
+        isActive={searchResultsActive}
+        handleClose={handleSearchResultClose}
+        propertiesToDisplay={propertiesToDisplay}
       />
     </div>
   );

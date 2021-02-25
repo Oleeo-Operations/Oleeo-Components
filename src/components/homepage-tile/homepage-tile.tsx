@@ -19,7 +19,10 @@ const HomepageTile = (props: HomepageTileProps): JSX.Element => {
   return (
     <div
       className="homepage-tile"
-      style={{ backgroundImage: `url(${details.imageSrc})` }}
+      style={{
+        // Add a conditional style, add background image if it exists
+        backgroundImage: details.imageSrc ? `url(${details.imageSrc})` : 'none',
+      }}
     >
       <a href={`/roles/${details.slug}`}>
         <div className="homepage-tile-inner">

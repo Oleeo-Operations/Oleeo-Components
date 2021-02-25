@@ -26,7 +26,6 @@ const HomepageTiles = (props: HomepageTileProps): JSX.Element => {
 
   useEffect(() => {
     // Subscribe to the RSS feed to get the data
-    // TODO: Add in some error handling
     const $subscription = rssService.getFeed(feedURL).subscribe({
       next: (vacancies: Vacancy[]) => {
         const counts: { [key: string]: number } = {};
@@ -42,6 +41,9 @@ const HomepageTiles = (props: HomepageTileProps): JSX.Element => {
         setVacancyCounts(counts);
         setIsLoading(false);
       },
+      error: (err) => {
+        console.warn(err);
+      },
     });
 
     // Return a function to clean up
@@ -49,13 +51,13 @@ const HomepageTiles = (props: HomepageTileProps): JSX.Element => {
   }, []);
 
   if (!tiles) {
-    console.warn('No tiles supplied to HomepageTile component');
-    return null;
+    return <p className="error">No tiles supplied to HomepageTile component</p>;
   }
 
   return (
     <div className="homepage-tiles">
       {tiles.map((tile) => {
+        // For each tile, return a HomepageTileComponent
         return (
           <HomepageTile
             details={tile}
