@@ -29,6 +29,7 @@ const HomepageTiles = (props: HomepageTileProps): JSX.Element => {
     const $subscription = rssService.getFeed(feedURL).subscribe({
       next: (vacancies: Vacancy[]) => {
         const counts: { [key: string]: number } = {};
+        console.log(JSON.stringify(vacancies));
         vacancies.forEach((vacancy) => {
           // For each vacancy, increment the appropriate category count
           // * This can probably be improved to use Array.reduce()?
