@@ -4,6 +4,7 @@ import './vacancy-description-modal.scss';
 
 type VacancyDescriptionModalProps = {
   vacancy: Vacancy;
+  noApplyBrandIDs?: number[];
   propertiesToDisplay: [
     {
       key: string;
@@ -24,21 +25,41 @@ type VacancyDescriptionModalProps = {
 const VacancyDescriptionModal = (
   props: VacancyDescriptionModalProps
 ): JSX.Element => {
-  const { vacancy, propertiesToDisplay } = props;
+  const { vacancy, propertiesToDisplay, noApplyBrandIDs } = props;
+
+  /**
+   * A function to determine whether or not the apply button should be displayed.
+   * @return {*}  {boolean}
+   */
+  const shouldDisplayApplyButton = (): boolean => {
+    // If no brand_id is on the vacancy
+    if (!vacancy.content.brand_id) {
+      return true;
+    }
+    // If no noApplyBrandIDs prop has been provided or is empty
+    if (!noApplyBrandIDs || noApplyBrandIDs?.length === 0) {
+      return true;
+    }
+    // Finally check whether the brand_id is one of the noApplyBrandIDs.
+    return noApplyBrandIDs.includes(vacancy.content.brand_id);
+  };
+
   try {
     return (
       <div className="vacancy-item">
         <h2 className="vacancy-title">{vacancy.title}</h2>
-        <div className="apply-button">
-          <a
-            href={vacancy.link}
-            className="btn btn-primary"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            Apply Now
-          </a>
-        </div>
+        {shouldDisplayApplyButton() && (
+          <div className="apply-button">
+            <a
+              href={vacancy.link}
+              className="btn btn-primary"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Apply Now
+            </a>
+          </div>
+        )}
         <div className="vacancy-information">
           <div className="vacancy-information-column">
             <div className="vacancy-info-key">Closing Date</div>
@@ -88,16 +109,18 @@ const VacancyDescriptionModal = (
             __html: vacancy.content.job_description,
           }}
         />
-        <div className="apply-button">
-          <a
-            href={vacancy.link}
-            className="btn btn-primary"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            Apply Now
-          </a>
-        </div>
+        {shouldDisplayApplyButton() && (
+          <div className="apply-button">
+            <a
+              href={vacancy.link}
+              className="btn btn-primary"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Apply Now
+            </a>
+          </div>
+        )}
       </div>
     );
   } catch ($e) {

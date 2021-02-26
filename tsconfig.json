@@ -10,5 +10,6 @@
     "sourceMap": false,
     "target": "ES5"
   },
-  "include": ["src/index.tsx"]
+  "exclude": ["node_modules", "**/*.spec.tsx"],
+  "include": ["**/*.ts", "**/*.tsx"]
 }
