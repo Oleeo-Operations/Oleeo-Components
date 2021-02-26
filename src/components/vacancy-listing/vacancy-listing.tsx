@@ -12,6 +12,7 @@ type VacancyListingProps = {
   feedURL: string;
   numberOfItems: number;
   noVacanciesMessage?: string;
+  noApplyBrandIDs?: number[];
   propertiesToDisplay: [
     {
       key: string;
@@ -51,6 +52,7 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
     noVacanciesMessage,
     propertiesToDisplay,
     modalPropertiesToDisplay,
+    noApplyBrandIDs,
     filter,
     sort,
   } = props;
@@ -127,6 +129,7 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
           {activeVacancy && (
             <VacancyDescriptionModal
               vacancy={activeVacancy}
+              noApplyBrandIDs={noApplyBrandIDs}
               propertiesToDisplay={modalPropertiesToDisplay}
             />
           )}
@@ -136,6 +139,9 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
   );
 };
 
-VacancyListing.defaultProps = { noVacanciesMessage: 'No vacancies' };
+VacancyListing.defaultProps = {
+  noVacanciesMessage: 'No vacancies',
+  noApplyBrandIDs: [],
+};
 
 export default VacancyListing;
