@@ -11,7 +11,7 @@
     flex-wrap: wrap;
     .vacancy-information-column {
       flex-basis: 100%;
-      padding: 0.75rem 1rem;
+      padding: 1rem;
       color: #555;
       border-bottom: 1px solid #f0f0f0;
       @include breakpoint(md) {
