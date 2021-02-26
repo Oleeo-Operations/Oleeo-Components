@@ -22,12 +22,6 @@
     "test": "jest",
     "test:watch": "jest --watch"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm test",
-      "pre-push": "npm test && npm run build && git add -A ."
-    }
-  },
   "browserslist": [
     "ie >= 9"
   ],
