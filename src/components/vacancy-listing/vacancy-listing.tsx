@@ -65,6 +65,9 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
     setActiveVacancy(vacancy);
   };
 
+  /**
+   * A method which is called when the modal is closed. Clears the active vacancy and focuses on the last link clicked.
+   */
   const closeModal = (): void => {
     setActiveVacancy(null);
     if (linkClicked) {
