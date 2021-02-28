@@ -3,6 +3,9 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  @include breakpoint(sm) {
+    justify-content: space-around;
+  }
   @include breakpoint(md) {
     justify-content: space-between;
   }

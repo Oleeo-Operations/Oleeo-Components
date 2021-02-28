@@ -83,15 +83,14 @@
       window.addEventListener('load', () => {
         ReactDOM.render(
           React.createElement(window.oleeo.Search, {
-            feedURL:
-              'https://kirklees.tal.net/vx/mobile-0/appcentre-1/brand-4/candidate/jobboard/vacancy/4/feed/structured',
+            feedURL: 'https://csrtesting.wcn.co.uk/csr/feed.cgi',
             categories: jobCategories,
             fuzzySearchThreshold: 0.5,
             fuzzySearchKeys: ['title'],
             propertiesToDisplay: [
               {
-                key: 'directorate',
-                label: 'Directorate: ',
+                key: 'job_role',
+                label: 'Job Role: ',
                 isArray: false,
                 isHTML: true,
               },
@@ -112,10 +111,10 @@
       window.addEventListener('load', function () {
         ReactDOM.render(
           React.createElement(window.oleeo.HomepageTiles, {
-            feedURL:
-              'https://kirklees.tal.net/vx/mobile-0/appcentre-1/brand-4/candidate/jobboard/vacancy/4/feed/structured',
+            feedURL: 'https://csrtesting.wcn.co.uk/csr/feed.cgi',
             tiles: jobCategories,
             countField: 'directorate',
+            directory: '/roles/',
           }),
           document.getElementById('homepage-vacancy-tiles')
         );
@@ -126,48 +125,23 @@
       window.onload = function () {
         ReactDOM.render(
           React.createElement(window.oleeo.VacancyListing, {
-            feedURL:
-              'https://kirklees.tal.net/vx/mobile-0/appcentre-1/brand-4/candidate/jobboard/vacancy/4/feed/structured',
+            feedURL: 'https://csrtesting.wcn.co.uk/csr/feed.cgi',
             numberOfItems: 4,
             noApplyBrandIDs: [5],
             propertiesToDisplay: [
               {
-                key: 'directorate',
-                label: 'Directorate: ',
-                isArray: false,
-                isHTML: true,
-              },
-              {
-                key: 'service_area',
-                label: 'Service Area: ',
+                key: 'job_role',
+                label: 'Job Role: ',
                 isArray: false,
                 isHTML: true,
               },
             ],
             modalPropertiesToDisplay: [
               {
-                key: 'Job_id',
-                label: 'Job ID',
-                isArray: false,
-                isHTML: false,
-              },
-              {
-                key: 'service_area',
-                label: 'Service Area',
+                key: 'job_role',
+                label: 'Job Role: ',
                 isArray: false,
                 isHTML: true,
-              },
-              {
-                key: 'directorate',
-                label: 'Directorate',
-                isArray: false,
-                isHTML: true,
-              },
-              {
-                key: 'position_type',
-                label: 'Position Type',
-                isArray: false,
-                isHTML: false,
               },
             ],
             filter: function () {

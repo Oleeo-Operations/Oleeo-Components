@@ -12,6 +12,7 @@ describe('COMPONENT: HomepageTile', (): void => {
         vacancyCount={2}
         details={jobCategories[0]}
         isLoading={false}
+        directory="/roles/"
       />
     );
   });

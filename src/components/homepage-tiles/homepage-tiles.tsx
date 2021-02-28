@@ -9,6 +9,7 @@ type HomepageTileProps = {
   tiles: CategoryDetails[];
   feedURL: string;
   countField: string;
+  directory: string;
 };
 
 /**
@@ -17,7 +18,7 @@ type HomepageTileProps = {
  * @return {*}  {JSX.Element}
  */
 const HomepageTiles = (props: HomepageTileProps): JSX.Element => {
-  const { tiles, feedURL, countField } = props;
+  const { tiles, feedURL, countField, directory } = props;
 
   const [vacancyCounts, setVacancyCounts] = useState<{ [key: string]: number }>(
     {}
@@ -29,7 +30,6 @@ const HomepageTiles = (props: HomepageTileProps): JSX.Element => {
     const $subscription = rssService.getFeed(feedURL).subscribe({
       next: (vacancies: Vacancy[]) => {
         const counts: { [key: string]: number } = {};
-        console.log(JSON.stringify(vacancies));
         vacancies.forEach((vacancy) => {
           // For each vacancy, increment the appropriate category count
           // * This can probably be improved to use Array.reduce()?
@@ -61,6 +61,7 @@ const HomepageTiles = (props: HomepageTileProps): JSX.Element => {
         // For each tile, return a HomepageTileComponent
         return (
           <HomepageTile
+            directory={directory}
             details={tile}
             vacancyCount={vacancyCounts[tile.name]}
             isLoading={isLoading}
