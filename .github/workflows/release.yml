@@ -23,7 +23,7 @@ jobs:
 
       - name: Test ⚙
         run: |
-          npm test
+          npm test:ci
 
       - id: keydb
         uses: pozetroninc/github-action-get-latest-release@master
