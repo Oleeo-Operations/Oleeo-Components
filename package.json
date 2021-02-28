@@ -20,7 +20,8 @@
     "build:watch": "webpack -w",
     "serve": "webpack-dev-server --open --config webpack.config.dev.js",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:ci": "jest --detectOpenHandles --ci "
   },
   "browserslist": [
     "ie >= 9"

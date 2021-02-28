@@ -17,10 +17,13 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Install and Build 🔧
+      - name: Install
         run: |
           npm install
-          npm run build
+
+      - name: Test ⚙
+        run: |
+          npm test
 
       - id: keydb
         uses: pozetroninc/github-action-get-latest-release@master
