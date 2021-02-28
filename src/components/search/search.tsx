@@ -1,7 +1,7 @@
 import React, { KeyboardEvent, useEffect, useState } from 'react';
 import { Subject, Subscription } from 'rxjs';
 import { throttleTime } from 'rxjs/operators';
-import Fuse from 'fuse.js/';
+import Fuse from 'fuse.js';
 import rssService from '../../services/rss-service';
 import { CategoryDetails } from '../../types/HomepageTileDetails';
 import { Vacancy } from '../../types/Vacancy';

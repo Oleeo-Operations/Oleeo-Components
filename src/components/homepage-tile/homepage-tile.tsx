@@ -6,6 +6,7 @@ type HomepageTileProps = {
   details: CategoryDetails;
   vacancyCount: number;
   isLoading: boolean;
+  directory: string;
 };
 
 /**
@@ -15,7 +16,7 @@ type HomepageTileProps = {
  * @return {*}  {JSX.Element}
  */
 const HomepageTile = (props: HomepageTileProps): JSX.Element => {
-  const { details, vacancyCount, isLoading } = props;
+  const { details, vacancyCount, isLoading, directory } = props;
   return (
     <div
       className="homepage-tile"
@@ -24,7 +25,7 @@ const HomepageTile = (props: HomepageTileProps): JSX.Element => {
         backgroundImage: details.imageSrc ? `url(${details.imageSrc})` : 'none',
       }}
     >
-      <a href={`/roles/${details.slug}`}>
+      <a href={`${directory || ''}${details.slug}`}>
         <div className="homepage-tile-inner">
           <h3
             className="homepage-tile-heading"
