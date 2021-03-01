@@ -6,13 +6,14 @@ import jobCategories from '../../data/categories';
 
 describe('COMPONENT: HomepageTile', (): void => {
   let wrapper: ReactWrapper;
+  const directory = '/roles/';
   beforeEach(() => {
     wrapper = mount(
       <HomepageTile
         vacancyCount={2}
         details={jobCategories[0]}
         isLoading={false}
-        directory="/roles/"
+        directory={directory}
       />
     );
   });
@@ -28,8 +29,7 @@ describe('COMPONENT: HomepageTile', (): void => {
 
   it('should link to the provided slug', () => {
     const link = wrapper.find('a');
-    const expectedLink = `/roles/${jobCategories[0].slug}`;
-
+    const expectedLink = `${directory}${jobCategories[0].slug}`;
     expect(link.props().href).toEqual(expectedLink);
   });
 });

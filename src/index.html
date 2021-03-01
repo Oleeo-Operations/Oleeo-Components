@@ -83,7 +83,8 @@
       window.addEventListener('load', () => {
         ReactDOM.render(
           React.createElement(window.oleeo.Search, {
-            feedURL: 'https://csrtesting.wcn.co.uk/csr/feed.cgi',
+            feedURL:
+              'https://files.civilservicejobs.service.gov.uk/company/cshr/atomfeed.cgi',
             categories: jobCategories,
             fuzzySearchThreshold: 0.5,
             fuzzySearchKeys: ['title'],
@@ -111,7 +112,8 @@
       window.addEventListener('load', function () {
         ReactDOM.render(
           React.createElement(window.oleeo.HomepageTiles, {
-            feedURL: 'https://csrtesting.wcn.co.uk/csr/feed.cgi',
+            feedURL:
+              'https://files.civilservicejobs.service.gov.uk/company/cshr/atomfeed.cgi',
             tiles: jobCategories,
             countField: 'directorate',
             directory: '/roles/',
@@ -125,23 +127,24 @@
       window.onload = function () {
         ReactDOM.render(
           React.createElement(window.oleeo.VacancyListing, {
-            feedURL: 'https://csrtesting.wcn.co.uk/csr/feed.cgi',
+            feedURL:
+              'https://files.civilservicejobs.service.gov.uk/company/cshr/atomfeed.cgi',
             numberOfItems: 4,
             noApplyBrandIDs: [5],
             propertiesToDisplay: [
               {
                 key: 'job_role',
                 label: 'Job Role: ',
-                isArray: false,
-                isHTML: true,
+                isArray: true,
+                isHTML: false,
               },
             ],
             modalPropertiesToDisplay: [
               {
                 key: 'job_role',
                 label: 'Job Role: ',
-                isArray: false,
-                isHTML: true,
+                isArray: true,
+                isHTML: false,
               },
             ],
             filter: function () {
