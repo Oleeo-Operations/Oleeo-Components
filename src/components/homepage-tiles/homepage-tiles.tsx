@@ -51,7 +51,7 @@ const HomepageTiles = (props: HomepageTileProps): JSX.Element => {
     return (): void => $subscription.unsubscribe();
   }, []);
 
-  if (!tiles) {
+  if (!tiles || tiles?.length === 0) {
     return <p className="error">No tiles supplied to HomepageTile component</p>;
   }
 

@@ -8,16 +8,16 @@ These components all require React and ReactDOM scripts to be added to the `<hea
 
 ```html
 <script
-  src="https://unpkg.com/react@17/umd/react.production.min.js"
+  src="https://unpkg.com/react@16/umd/react.production.min.js"
   crossorigin
 ></script>
 <script
-  src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"
+  src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"
   crossorigin
 ></script>
 ```
 
-**Note**: only version 17 of React and ReactDOM have been tested.
+**Note**: only version 16 of React and ReactDOM have been tested.
 
 The component source code can be accessed using jsDelivr. A script tag must be added into the `<head>` of the pages which are to contain the components. To access the latest version, use:
 
