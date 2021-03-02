@@ -12,6 +12,8 @@ describe('COMPONENT: HomepageTile', (): void => {
   beforeEach(() => {
     handleClose = jest.fn();
 
+    // Mount the component
+    // Using mount so we can access DOM properties
     wrapper = mount(
       <Modal
         modalDescription="Test Description"
@@ -26,6 +28,19 @@ describe('COMPONENT: HomepageTile', (): void => {
 
   it('should be defined', () => {
     expect(wrapper).not.toBeUndefined();
+  });
+
+  it('should correctly set the title and description', () => {
+    const descriptionDiv = wrapper.find('#modal-description');
+    const titleDiv = wrapper.find('#modal-title');
+
+    const dialog = wrapper.find('.modal');
+
+    expect(descriptionDiv.text()).toEqual('Test Description');
+    expect(titleDiv.text()).toEqual('Test Title');
+
+    expect(dialog.prop('aria-labelledby')).toEqual('modal-title');
+    expect(dialog.prop('aria-describedby')).toEqual('modal-description');
   });
 
   it('should call the handleClose prop when the close button is clicked', () => {

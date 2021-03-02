@@ -65,8 +65,10 @@ const Modal = (props: ModalProps): JSX.Element => {
           aria-labelledby="modal-title"
           aria-describedby="modal-description"
         >
+          {/* Using focus-trap-react (https://github.com/focus-trap/focus-trap-react) to trap focus in the dialog for accessibility  */}
           <FocusTrap focusTrapOptions={{ allowOutsideClick: true }}>
             <div className="modal-contents">
+              {/* Render the title and description as sr-only elements */}
               <div className="sr-only" id="modal-title">
                 {modalTitle}
               </div>
@@ -78,6 +80,7 @@ const Modal = (props: ModalProps): JSX.Element => {
                   className="button-container"
                   style={{ marginLeft: 'auto' }}
                 >
+                  {/* Add the button so the user can close the modal */}
                   <button
                     type="button"
                     onClick={handleClose}
