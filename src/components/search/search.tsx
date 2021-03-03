@@ -89,6 +89,7 @@ const Search = (props: SearchProps): JSX.Element => {
               .search(value)
               .map((result) => result.item) as Vacancy[]),
           ]);
+
           // Run the category and update the state variable
           setSearchResultCategories((): CategoryDetails[] => [
             ...(categoryFuzzySearcher
