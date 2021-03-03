@@ -3,16 +3,18 @@ import { mount, ReactWrapper, shallow, ShallowWrapper } from 'enzyme';
 import React from 'react';
 import HomepageTile from './homepage-tile';
 import jobCategories from '../../data/categories';
+import VacancyCount from '../vacancy-count/vacancy-count';
 
 describe('COMPONENT: HomepageTile', (): void => {
-  let wrapper: ReactWrapper;
+  let wrapper: ShallowWrapper;
+  const directory = '/roles/';
   beforeEach(() => {
-    wrapper = mount(
+    wrapper = shallow(
       <HomepageTile
         vacancyCount={2}
-        details={jobCategories[0]}
+        details={jobCategories[0]} // Just use the first one for testing
         isLoading={false}
-        directory="/roles/"
+        directory={directory}
       />
     );
   });
@@ -28,8 +30,24 @@ describe('COMPONENT: HomepageTile', (): void => {
 
   it('should link to the provided slug', () => {
     const link = wrapper.find('a');
-    const expectedLink = `/roles/${jobCategories[0].slug}`;
-
+    const expectedLink = `${directory}${jobCategories[0].slug}`;
     expect(link.props().href).toEqual(expectedLink);
+  });
+
+  it('should correctly set the background image', () => {
+    const div = wrapper.find('.homepage-tile');
+    const expectedBackground = `url(${jobCategories[0].imageSrc})`;
+
+    const divBackground = div.props().style.backgroundImage;
+
+    expect(divBackground).toEqual(expectedBackground);
+  });
+
+  it('should display the VacancyCount component when the component is not in the loading state', () => {
+    wrapper.setProps({ isLoading: true });
+    expect(wrapper.find(VacancyCount).length).toEqual(0);
+
+    wrapper.setProps({ isLoading: false });
+    expect(wrapper.find(VacancyCount).length).toEqual(1);
   });
 });

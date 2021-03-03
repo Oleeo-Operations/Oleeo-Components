@@ -92,5 +92,11 @@
     "jsdoc": {
       "require-jsdoc": [1]
     }
-  }
+  },
+  "overrides": [
+    {
+      "files": ["*.spec.tsx", "*.spec.ts"],
+      "rules": { "import/no-extraneous-dependencies": [0] }
+    }
+  ]
 }

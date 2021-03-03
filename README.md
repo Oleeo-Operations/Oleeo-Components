@@ -8,16 +8,16 @@ These components all require React and ReactDOM scripts to be added to the `<hea
 
 ```html
 <script
-  src="https://unpkg.com/react@17/umd/react.production.min.js"
+  src="https://unpkg.com/react@16/umd/react.production.min.js"
   crossorigin
 ></script>
 <script
-  src="https://unpkg.com/react-dom@17/umd/react-dom.production.min.js"
+  src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"
   crossorigin
 ></script>
 ```
 
-**Note**: only version 17 of React and ReactDOM have been tested.
+**Note**: only version 16 of React and ReactDOM have been tested.
 
 The component source code can be accessed using jsDelivr. A script tag must be added into the `<head>` of the pages which are to contain the components. To access the latest version, use:
 
@@ -49,8 +49,9 @@ This component renders a "tile" for each job category passed as props, including
       React.createElement(window.oleeo.HomepageTiles, {
         feedURL:
           'https://kirklees.tal.net/vx/mobile-0/appcentre-1/brand-4/candidate/jobboard/vacancy/4/feed/structured',
-        tiles: directorates,
+        tiles: categories,
         countField: 'directorate',
+        directory: '/roles/',
       }),
       document.getElementById('homepage-vacancy-tiles')
     );
@@ -60,11 +61,12 @@ This component renders a "tile" for each job category passed as props, including
 
 #### Params
 
-| **Name**   | **Description**                                                                                                                                                                           |
-| ---------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| feedURL    | The URL of the structured RSS Feed from which jobs can be pulled.                                                                                                                         |
-| tiles      | An array of objects which contain the information required for the tile. It should contain the name, slug and imageURL of the job category and can be created using a Webflow collection. |
-| countField | The key of the field to match in the RSS feed and count the number of vacancies per category.                                                                                             |
+| **Name**   | **Description**                                                                                                                                                                                                      |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| feedURL    | The URL of the structured RSS Feed from which jobs can be pulled.                                                                                                                                                    |
+| tiles      | An array of objects which contain the information required for the tile. It should contain the name, slug and imageURL of the job category and can be created using a Webflow collection.                            |
+| countField | The key of the field to match in the RSS feed and count the number of vacancies per category.                                                                                                                        |
+| directory  | A string detailing the directory in which the "Job Categories" are in. Related to the "Collection URL" field when creating a new Collection on Webflow. **Note:** This should contain forward slashes e.g. `/roles/` |
 
 ### HomepageListing Component
 
@@ -146,6 +148,8 @@ This component renders a "card" for each job available. Includes configurable pr
 | isArray  | boolean  | Whether or not the item is an Array. If it is, it automatically includes each item in a comma separated list.                                              |
 | isHTML   | boolean  | Whether or not the item contains raw HTML. This should be used with caution as it allows the content to be rendered as is using `dangerouslySetInnerHTML`. |
 
+**Note:** You should not use `isArray` and `isHTML` at the same time.
+
 ### Search
 
 A component to display a search bar in which a user can search for vacancies or vacancy categories.
@@ -204,18 +208,26 @@ The project is configured to include polyfills so that it works on older version
 
 The components have been created to be fully compliant with Web Content Accessibility Guidelines (WCAG) level AA.
 
+## Testing
+
+The project uses Jest and Enzyme for unit testing. To run these tests, simply use the command `npm test` or to run Jest in watch mode, use `npm run test:watch`.
+For documentation, see:
+
+- https://jestjs.io/docs/en/getting-started
+- https://enzymejs.github.io/enzyme/
+
 ## GitHub Actions
 
-A workflow has been created on GitHub actions to build and release the code when there is a push to the `main` branch. Each push creates a new release, the latest of which which can be accessed on Webflow using:
+A workflow has been created on GitHub actions to release the code when there is a push to the `main` branch. Each push, assuming tests pass, creates a new release, the latest of which which can be accessed on Webflow using:
 
 ```html
 <script
-  src="https://cdn.jsdelivr.net/gh/Oleeo-Operations/Oleeo-Components@latest/dist/main.js"
+  src="https://cdn.jsdelivr.net/gh/Oleeo-Operations/Oleeo-Components@0/dist/main.js"
   async
 ></script>
 ```
 
-**Note:** Currently, the components must still be built locally using `npm run build` prior to being pushed to GitHub.
+**Note:** A pre-commit hook has been created using Husky to build the code. This hooks runs the tests, and builds the code. A commit is not allowed if this fails.
 
 ## Key Contacts
 
