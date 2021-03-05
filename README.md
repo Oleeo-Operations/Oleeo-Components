@@ -2,6 +2,14 @@
 
 This project exposes components for use on Oleeo Careers Sites.
 
+## Installation and Local Development
+
+To install locally:
+
+1. Clone this repository
+2. Run `npm install`
+3. Run `npm run serve`. The project will open on localhost:8080.
+
 ## Usage
 
 These components all require React and ReactDOM scripts to be added to the `<head>` of all Webflow pages which use the components. This can be added using:
