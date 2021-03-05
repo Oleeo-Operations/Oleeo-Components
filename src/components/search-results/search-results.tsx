@@ -109,6 +109,7 @@ const SearchResults = (props: SearchResultsProps): JSX.Element => {
                     <a href={vacancy.id}>
                       <span className="vacancy-title">{vacancy.title}</span>
                       <div className="vacancy-details">
+                        {/* Only display the closing date if it exists */}
                         {vacancy.content.closing_date && (
                           <div className="closing-date vacancy-property">
                             <span className="property-title">
