@@ -109,14 +109,18 @@ const SearchResults = (props: SearchResultsProps): JSX.Element => {
                     <a href={vacancy.id}>
                       <span className="vacancy-title">{vacancy.title}</span>
                       <div className="vacancy-details">
-                        <div className="closing-date vacancy-property">
-                          <span className="property-title">Closing Date:</span>
-                          <span className="property-value">
-                            {new Intl.DateTimeFormat('en-GB').format(
-                              new Date(vacancy.content.closing_date)
-                            )}
-                          </span>
-                        </div>
+                        {vacancy.content.closing_date && (
+                          <div className="closing-date vacancy-property">
+                            <span className="property-title">
+                              Closing Date:
+                            </span>
+                            <span className="property-value">
+                              {new Intl.DateTimeFormat('en-GB').format(
+                                new Date(vacancy.content.closing_date)
+                              )}
+                            </span>
+                          </div>
+                        )}
                         <div className="vacancy-properties">
                           {/* This is stolen from the VacancyListing component  */}
                           {propertiesToDisplay.map((property) => {
