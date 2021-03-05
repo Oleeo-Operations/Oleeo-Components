@@ -41,14 +41,16 @@ const VacancyItem = (props: VacancyItemProps): JSX.Element => {
               {vacancy.title}
             </button>
           </h2>
-          <div className="vacancy-info-item">
-            <span className="item-title">Closing Date: </span>
-            <span className="item-value">
-              {new Intl.DateTimeFormat('en-GB').format(
-                new Date(vacancy.content.closing_date)
-              )}
-            </span>
-          </div>
+          {vacancy.content.closing_date && (
+            <div className="vacancy-info-item">
+              <span className="item-title">Closing Date: </span>
+              <span className="item-value">
+                {new Intl.DateTimeFormat('en-GB').format(
+                  new Date(vacancy.content.closing_date)
+                )}
+              </span>
+            </div>
+          )}
           {propertiesToDisplay.map((item) => {
             if (!vacancy.content[item.key]) {
               return null;
