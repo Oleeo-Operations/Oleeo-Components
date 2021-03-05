@@ -127,6 +127,7 @@ This component renders a "card" for each job available. Includes configurable pr
             isHTML: false,
           },
         ],
+        noApplyBrandIDs: [4],
         filter: function () {
           return true;
         },
@@ -146,6 +147,7 @@ This component renders a "card" for each job available. Includes configurable pr
 | propertiesToDisplay      | An array of objects detailing which vacancy properties are displayed on the card. See below for schema.  |
 | modalPropertiesToDisplay | An array of objects detailing which vacancy properties are displayed in the modal. See below for schema. |
 | filter                   | A JavaScript function to filter the records.                                                             |
+| noApplyBrandIDs          | An array of numbers denoting the IDs of brands which should hide the Apply button. If the vacancy brand ID matches one of these, the component will not display an apply button. | 
 
 #### Schema
 
