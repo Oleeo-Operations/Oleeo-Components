@@ -61,14 +61,17 @@ const VacancyDescriptionModal = (
           </div>
         )}
         <div className="vacancy-information">
-          <div className="vacancy-information-column">
-            <div className="vacancy-info-key">Closing Date</div>
-            <div className="vacancy-info-value">
-              {new Intl.DateTimeFormat('en-GB').format(
-                new Date(vacancy.content.closing_date)
-              )}
+          {/* Only display the closing date if it exists */}
+          {vacancy.content.closing_date && (
+            <div className="vacancy-information-column">
+              <div className="vacancy-info-key">Closing Date</div>
+              <div className="vacancy-info-value">
+                {new Intl.DateTimeFormat('en-GB').format(
+                  new Date(vacancy.content.closing_date)
+                )}
+              </div>
             </div>
-          </div>
+          )}
           <div className="vacancy-information-column">
             <div className="vacancy-info-key">Published </div>
             <div className="vacancy-info-value">
