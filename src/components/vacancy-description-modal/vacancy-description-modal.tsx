@@ -41,7 +41,7 @@ const VacancyDescriptionModal = (
       return true;
     }
     // Finally check whether the brand_id is one of the noApplyBrandIDs.
-    return noApplyBrandIDs.includes(vacancy.content.brand_id);
+    return !vacancy.content.brand_id.includes(noApplyBrandIDs);
   };
 
   try {
