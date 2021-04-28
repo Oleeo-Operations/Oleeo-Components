@@ -1,0 +1,42 @@
+// Regex
+const brTagRegex = /<br([^>]*)\/>/g;
+const strongTagRegex = /<strong([^>]*)>/g;
+const openH1TagRegex = /<h1([^>]*)>/g;
+const openH2TagRegex = /<h2([^>]*)>/g;
+const openH3TagRegex = /<h3([^>]*)>/g;
+const openH4TagRegex = /<h4([^>]*)>/g;
+const openH5TagRegex = /<h5([^>]*)>/g;
+const openH6TagRegex = /<h6([^>]*)>/g;
+const closeHTagRegex = /<\/h[1-6]([^>]*)>/g;
+const ulTagRegex = /<(\/)?ul([^>]*)>/g;
+const liTagRegex = /<li([^>]*)>/g;
+
+// Replacement Strings
+function hTagReplacementStrings(fontSize: number){
+  return `<p style="font-size: ${fontSize}px"$1>`.concat('<strong>')
+}
+const closeHTagReplacementString = '</strong></p>';
+const openLiTagReplacementString = '<p$1>'.concat('• ');
+
+// Formats xml into P tags in order to be rendered in order
+function formatXML(data: string){
+    let formattedResponse = ''
+        let brTags = data.replace(brTagRegex, '')
+        let openStrongTags = brTags.replace(strongTagRegex, '');
+        let closeStrongTags = openStrongTags.split('</strong>').join('');
+        let openingH1Tag = closeStrongTags.replace(openH1TagRegex, hTagReplacementStrings(24));
+        let openingH2Tag = openingH1Tag.replace(openH2TagRegex, hTagReplacementStrings(23));
+        let openingH3Tag = openingH2Tag.replace(openH3TagRegex, hTagReplacementStrings(22));
+        let openingH4Tag = openingH3Tag.replace(openH4TagRegex, hTagReplacementStrings(21));
+        let openingH5Tag = openingH4Tag.replace(openH5TagRegex, hTagReplacementStrings(20));
+        let openingH6Tag = openingH5Tag.replace(openH6TagRegex, hTagReplacementStrings(19));
+        let closingHTag = openingH6Tag.replace(closeHTagRegex, closeHTagReplacementString);
+        let ul = closingHTag.replace(ulTagRegex, '');
+        let openingLi = ul.replace(liTagRegex, openLiTagReplacementString);
+        let closingLi = openingLi.split('</li>').join('</p>');
+      // assign all changes to formattedResponse
+      formattedResponse = closingLi;
+   return formattedResponse;
+};
+
+export default formatXML;

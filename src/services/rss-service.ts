@@ -3,6 +3,7 @@ import { map, switchMap } from 'rxjs/operators';
 import Parser, { Item, Output } from 'rss-parser';
 import httpService from './http-service';
 import { Vacancy } from '../types/Vacancy';
+import formatXML from './formatXML';
 
 const parser = new Parser();
 
@@ -18,7 +19,8 @@ class RSSService {
   public getFeed(feedURL: string): Observable<Vacancy[]> {
     return httpService.get(feedURL).pipe(
       switchMap((response: string) => {
-        return from(parser.parseString(response)).pipe(
+        // Turn response into desired XML using formatXML function
+        return from(parser.parseString(formatXML(response))).pipe(
           map((output: Output): Vacancy[] => {
             const vacancies = output.items.map((item: Item) => {
               // Temporarily store the item in an object
