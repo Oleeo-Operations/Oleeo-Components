@@ -237,9 +237,10 @@ A workflow has been created on GitHub actions to release the code when there is 
 ></script>
 ```
 
+**Note:** Using the above code will eventually access the latest changes, however it often takes a while (8-24 hours) for jsdelvr to sync. If an urgent change is required, use the specific version which can be found from github tags. E.g - "https://cdn.jsdelivr.net/gh/Oleeo-Operations/Oleeo-Components@0.26.0/dist/main.js". You SHOULD change this back to @0 once the latest code is accessed from jsdelvr as to avoid potential issues. 
 **Note:** A pre-commit hook has been created using Husky to build the code. This hooks runs the tests, and builds the code. A commit is not allowed if this fails.
 
 ## Key Contacts
 
-Rob Bailey - robert.bailey@oleeo.com
+Matt Hawes - matthew.hawes@oleeo.com
 Siva Mayuran - sivalingham.mayuran@oleeo.com
