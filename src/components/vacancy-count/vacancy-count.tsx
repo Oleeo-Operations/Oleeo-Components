@@ -10,7 +10,7 @@ const VacancyCount = (props: VacancyCountProps): JSX.Element => {
   if (!count) {
     return (
       <p className="vacancy-count no-vacancies-available">
-        No current vacancies
+        No vacancies available
       </p>
     );
   }

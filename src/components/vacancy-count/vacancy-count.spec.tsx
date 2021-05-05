@@ -14,7 +14,7 @@ describe('COMPONENT: VacancyCount', () => {
 
     const hostEl = wrapper.find('.vacancy-count');
 
-    expect(hostEl.text()).toEqual('No current vacancies');
+    expect(hostEl.text()).toEqual('No vacancies available');
   });
 
   it('should display the number of vacancies available when not zero', () => {
