@@ -42,7 +42,7 @@ window.oleeo.HomepageTiles;
 ```
 ### Accessibility
 
-As it currently stands Webflow does not provide an easy way to add alternate attributes to iframe videos (specifically in rich text elements OR within a CMS). Due to this, a small ammount of custom code placed in the footer code in Webflow will ensure WCAG AA compliancy:
+As it currently stands Webflow does not provide an easy way to add alternate attributes to iframe videos (specifically in rich text elements OR within a CMS). Due to this, a small amount of custom code placed in the footer code in Webflow will ensure WCAG AA compliancy:
 
 ```html
 <script>
