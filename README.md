@@ -40,7 +40,19 @@ E.g. for the HomepageTiles component:
 ```javascript
 window.oleeo.HomepageTiles;
 ```
+### Accessibility
 
+As it currently stands Webflow does not provide an easy way to add alternate attributes to iframe videos (specifically in rich text elements OR within a CMS). Due to this, a small ammount of custom code placed in the footer code in Webflow will ensure WCAG AA compliancy:
+
+```html
+<script>
+    const iframe = document.querySelectorAll('IFRAME')
+    for(var i = 0; i < iframe.length; i++){
+        iframe[i].setAttribute('title', 'Media Content')
+    }
+</script>
+ ```
+ 
 ### HomepageTiles Component
 
 This component renders a "tile" for each job category passed as props, including a background image and a count of how many jobs are available in each category.
