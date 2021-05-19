@@ -9,6 +9,7 @@ const openH5TagRegex = /<h5([^>]*)>/g;
 const openH6TagRegex = /<h6([^>]*)>/g;
 const closeHTagRegex = /<\/h[1-6]([^>]*)>/g;
 const ulTagRegex = /<(\/)?ul([^>]*)>/g;
+const emptyATag = /<a href=""\/>/g
 // Need two li regex so it does not target link tag
 const liTagRegex = /<li>/g;
 const liClassTagRegex = /<li( [^>]*)>/g;
@@ -18,8 +19,8 @@ function hTagReplacementStrings(fontSize: number){
   return `<p style="font-size: ${fontSize}px"$1>`.concat('<strong>')
 }
 const closeHTagReplacementString = '</strong></p>';
-const openLiTagReplacementString = '<p>'.concat('• ');
-const openLiClassTagReplacementString = '<p$1>'.concat('• ');
+const openLiTagReplacementString = '<p style="padding-left:20px">'.concat('• ');
+const openLiClassTagReplacementString = '<p style="padding-left:20px"$1>'.concat('• ');
 
 // Formats xml into P tags in order to be rendered in order
 function formatXML(data: string){
@@ -38,8 +39,9 @@ function formatXML(data: string){
         let openingLi = ul.replace(liTagRegex, openLiTagReplacementString);
         let openingLiClass = openingLi.replace(liClassTagRegex, openLiClassTagReplacementString)
         let closingLi = openingLiClass.split('</li>').join('</p>');
+        let emptyATags = closingLi.replace(emptyATag, '')
       // assign all changes to formattedResponse
-      formattedResponse = closingLi;
+      formattedResponse = emptyATags;
    return formattedResponse;
 };
 
