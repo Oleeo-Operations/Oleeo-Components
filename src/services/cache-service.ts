@@ -17,7 +17,7 @@ class CacheService {
   private readonly cache: Map<string, CacheEntry> = new Map();
 
   // The expiry time (in ms) of the cache. I.e. CacheEntries older than this force a new request.
-  private readonly cacheExpiry = 1000 * 60 * 60 * 0.30; // 30 Minutes;
+  private readonly cacheExpiry = 1000 * 60 * 60 * 1; // 1 hour;
 
   /**
    * Retrieve an entry from the cache. If not found in memory, check in the browser's localStorage.
