@@ -48,7 +48,7 @@ const VacancyDescriptionModal = (
     return (
       <div className="vacancy-item">
         <h2 className="vacancy-title">{vacancy.title}</h2>
-        {shouldDisplayApplyButton() && (
+        {shouldDisplayApplyButton() ? (
           <div className="apply-button">
             <a
               href={vacancy.link}
@@ -59,7 +59,11 @@ const VacancyDescriptionModal = (
               Apply Now
             </a>
           </div>
-        )}
+        ) : 
+          <div className = "apply-button">
+            <h4 style={{color: "red"}}>No quick apply - please check job description for how to apply</h4>
+          </div>
+        }
         <div className="vacancy-information">
           {/* Only display the closing date if it exists */}
           {vacancy.content.closing_date && (
@@ -112,7 +116,7 @@ const VacancyDescriptionModal = (
             __html: vacancy.content.job_description,
           }}
         />
-        {shouldDisplayApplyButton() && (
+        {shouldDisplayApplyButton() ? (
           <div className="apply-button">
             <a
               href={vacancy.link}
@@ -123,7 +127,11 @@ const VacancyDescriptionModal = (
               Apply Now
             </a>
           </div>
-        )}
+        ) : 
+        <div className = "apply-button">
+          <h4 style={{color: "#ff0f0f"}}>No quick apply - please check job description for how to apply</h4>
+        </div>
+        }
       </div>
     );
   } catch ($e) {
