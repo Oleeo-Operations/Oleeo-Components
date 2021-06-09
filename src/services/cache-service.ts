@@ -17,7 +17,7 @@ class CacheService {
   private readonly cache: Map<string, CacheEntry> = new Map();
 
   // The expiry time (in ms) of the cache. I.e. CacheEntries older than this force a new request.
-  private readonly cacheExpiry = 1000 * 60 * 60 * 1; // 1 Hour;
+  private readonly cacheExpiry = 1000 * 60 * 60 * 0.30; // 30 Minutes;
 
   /**
    * Retrieve an entry from the cache. If not found in memory, check in the browser's localStorage.
@@ -26,10 +26,10 @@ class CacheService {
    */
   public get(url: string): CacheEntry {
     // TODO: Match on params too
-    if (!this.cache.get(url)) {
+    if (!this.cache.get(url) && localStorage.getItem(url) !== null) {
       return JSON.parse(localStorage.getItem(url));
     }
-    return this.cache.get(url);
+    return this.cache.get(url)
   }
 
   /**
@@ -38,11 +38,12 @@ class CacheService {
    * @param {AxiosResponse} response
    * @memberof CacheService
    */
+  
   public add(url: string, response: AxiosResponse): void {
     const cacheEntry: CacheEntry = {
       response,
       params: response.config.params,
-      expiry: Date.now() + this.cacheExpiry,
+      expiry: Date.now() + this.cacheExpiry - 1,
     };
     this.cache.set(url, cacheEntry);
     localStorage.setItem(url, JSON.stringify(cacheEntry));
