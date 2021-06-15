@@ -103,6 +103,9 @@ In the component there are two versions of homepage tile styles (1 and 2). The d
     });
 </script>
 ```
+#### Example of style 2:
+
+![A screenshot of the HomepageListing Component](./docs/screenshots/Careers at Kirklees _ Kirklees jobs - Google Chrome 15_06_2021 17_26_42 (2).png)
 
 ### HomepageListing Component
 
