@@ -54,7 +54,18 @@ const HomepageTiles = (props: HomepageTileProps): JSX.Element => {
   if (!tiles || tiles?.length === 0) {
     return <p className="error">No tiles supplied to HomepageTile component</p>;
   }
-
+  
+  // Set a classname to the tiles style number to pass in as props to the homepage tile component
+  let classname = ''
+  tiles.map(tile => {
+    if(tile.style === 1 || !tile.style || tile.style >= 3){
+      classname = '1'
+    } else if(tile.style === 2) {
+      classname = '2'
+    }
+    return classname
+  })
+  
   return (
     <div className="homepage-tiles">
       {tiles.map((tile) => {
@@ -66,6 +77,7 @@ const HomepageTiles = (props: HomepageTileProps): JSX.Element => {
             vacancyCount={vacancyCounts[tile.name]}
             isLoading={isLoading}
             key={tile.slug}
+            classname={classname}
           />
         );
       })}

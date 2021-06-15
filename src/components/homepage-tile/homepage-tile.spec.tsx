@@ -15,6 +15,7 @@ describe('COMPONENT: HomepageTile', (): void => {
         details={jobCategories[0]} // Just use the first one for testing
         isLoading={false}
         directory={directory}
+        classname=''
       />
     );
   });
@@ -32,15 +33,6 @@ describe('COMPONENT: HomepageTile', (): void => {
     const link = wrapper.find('a');
     const expectedLink = `${directory}${jobCategories[0].slug}`;
     expect(link.props().href).toEqual(expectedLink);
-  });
-
-  it('should correctly set the background image', () => {
-    const div = wrapper.find('.homepage-tile');
-    const expectedBackground = `url(${jobCategories[0].imageSrc})`;
-
-    const divBackground = div.props().style.backgroundImage;
-
-    expect(divBackground).toEqual(expectedBackground);
   });
 
   it('should display the VacancyCount component when the component is not in the loading state', () => {

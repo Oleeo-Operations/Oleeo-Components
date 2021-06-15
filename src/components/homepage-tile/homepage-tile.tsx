@@ -7,6 +7,7 @@ type HomepageTileProps = {
   vacancyCount: number;
   isLoading: boolean;
   directory: string;
+  classname: string
 };
 
 /**
@@ -16,10 +17,10 @@ type HomepageTileProps = {
  * @return {*}  {JSX.Element}
  */
 const HomepageTile = (props: HomepageTileProps): JSX.Element => {
-  const { details, vacancyCount, isLoading, directory } = props;
+  const { details, vacancyCount, isLoading, directory, classname } = props;
   return (
     <div
-      className="homepage-tile"
+      className={classname === '1' ? 'homepage-tile' : 'homepage-tile-style-2'}
       style={{
         // Add a conditional style, add background image if it exists
         backgroundImage: details.imageSrc ? `url(${details.imageSrc})` : 'none',
