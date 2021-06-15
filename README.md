@@ -94,8 +94,8 @@ In the component there are two versions of homepage tile styles (1 and 2). The d
 
 ```html 
 <script>
-	var name = "";
-	categories.push({
+    var name = "";
+    categories.push({
   	name: name,
 	slug: "",
 	imageSrc: "",
