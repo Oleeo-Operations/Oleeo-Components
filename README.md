@@ -88,6 +88,22 @@ This component renders a "tile" for each job category passed as props, including
 | countField | The key of the field to match in the RSS feed and count the number of vacancies per category.                                                                                                                        |
 | directory  | A string detailing the directory in which the "Job Categories" are in. Related to the "Collection URL" field when creating a new Collection on Webflow. **Note:** This should contain forward slashes e.g. `/roles/` |
 
+#### Styling
+
+In the component there are two versions of homepage tile styles (1 and 2). The default style (1) can be seen in the above screenshot - it is worth noting that if a style is not specified, this style will be rendered. To specify a style, add in the same place you create the custom embed for the CMS collection mapping the homepage tiles. 
+
+```html 
+<script>
+	var name = "";
+	categories.push({
+  	name: name,
+    slug: "",
+    imageSrc: "",
+    style: 2
+    });
+</script>
+```
+
 ### HomepageListing Component
 
 This component renders a "card" for each job available. Includes configurable properties to display. The component opens a modal with the vacancy description when clicked.
