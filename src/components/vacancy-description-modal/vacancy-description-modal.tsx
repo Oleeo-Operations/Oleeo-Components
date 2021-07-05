@@ -5,6 +5,7 @@ import './vacancy-description-modal.scss';
 type VacancyDescriptionModalProps = {
   vacancy: Vacancy;
   noApplyBrandIDs?: number[];
+  instantApply?: string[];
   propertiesToDisplay: [
     {
       key: string;
@@ -25,7 +26,7 @@ type VacancyDescriptionModalProps = {
 const VacancyDescriptionModal = (
   props: VacancyDescriptionModalProps
 ): JSX.Element => {
-  const { vacancy, propertiesToDisplay, noApplyBrandIDs } = props;
+  const { vacancy, propertiesToDisplay, noApplyBrandIDs, instantApply } = props;
 
   /**
    * A function to determine whether or not the apply button should be displayed.
@@ -43,6 +44,20 @@ const VacancyDescriptionModal = (
     // Finally check whether the brand_id is one of the noApplyBrandIDs.
     return !vacancy.content.brand_id.includes(noApplyBrandIDs);
   };
+  
+  /**
+   * A function to determine whether or not the apply button should take the user directly to the ATS description
+   * or direct apply / the login page.
+   */ 
+  const shouldSetToInstantApply = () => {
+    // If instant apply is set to no, return a link that will direct user to desired ATS job description
+    if(instantApply[0] == 'no'){
+      return vacancy.link.substr(0, vacancy.link.indexOf('en-GB'))
+    // Else, take the user to direct apply / login page
+    } else {
+      return vacancy.link
+    }
+  }
 
   try {
     return (
@@ -51,7 +66,7 @@ const VacancyDescriptionModal = (
         {shouldDisplayApplyButton() ? (
           <div className="apply-button">
             <a
-              href={vacancy.link}
+              href={shouldSetToInstantApply()}
               className="btn btn-primary"
               target="_blank"
               rel="noreferrer noopener"
