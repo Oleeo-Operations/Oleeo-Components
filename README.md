@@ -180,6 +180,8 @@ This component renders a "card" for each job available. Includes configurable pr
 | filter                   | A JavaScript function to filter the records.                                                             |
 | noApplyBrandIDs          | An array of numbers denoting the IDs of brands which should hide the Apply button. If the vacancy brand ID matches one of these, the component will not display an apply button. | 
 | instantApply             | An array simply stating either 'yes' or 'no'. By default this is left as 'yes' and should therefore only be used if a client wishes to link the apply button directly to the job description within the ATS. |
+| applyButtonText          | A string detailing what the apply button should say. If unused or an empty string is applied, then the button will simply say 'Apply Now'. |
+
 #### Schema
 
 | **Item** | **Type** | **Description**                                                                                                                                            |
