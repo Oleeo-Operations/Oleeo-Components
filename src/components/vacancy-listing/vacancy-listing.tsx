@@ -14,6 +14,7 @@ type VacancyListingProps = {
   noVacanciesMessage?: string;
   noApplyBrandIDs?: number[];
   instantApply?: string[];
+  applyButtonText?: string;
   propertiesToDisplay: [
     {
       key: string;
@@ -55,6 +56,7 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
     modalPropertiesToDisplay,
     noApplyBrandIDs,
     instantApply,
+    applyButtonText,
     filter,
     sort,
   } = props;
@@ -136,6 +138,7 @@ const VacancyListing = (props: VacancyListingProps): JSX.Element => {
               vacancy={activeVacancy}
               noApplyBrandIDs={noApplyBrandIDs}
               instantApply={instantApply}
+              applyButtonText={applyButtonText}
               propertiesToDisplay={modalPropertiesToDisplay}
             />
           )}
@@ -149,6 +152,7 @@ VacancyListing.defaultProps = {
   noVacanciesMessage: 'No vacancies',
   noApplyBrandIDs: [],
   instantApply: [],
+  applyButtonText: '',
 };
 
 export default VacancyListing;

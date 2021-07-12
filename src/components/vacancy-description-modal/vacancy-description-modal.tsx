@@ -6,6 +6,7 @@ type VacancyDescriptionModalProps = {
   vacancy: Vacancy;
   noApplyBrandIDs?: number[];
   instantApply?: string[];
+  applyButtonText?: string;
   propertiesToDisplay: [
     {
       key: string;
@@ -26,7 +27,7 @@ type VacancyDescriptionModalProps = {
 const VacancyDescriptionModal = (
   props: VacancyDescriptionModalProps
 ): JSX.Element => {
-  const { vacancy, propertiesToDisplay, noApplyBrandIDs, instantApply } = props;
+  const { vacancy, propertiesToDisplay, noApplyBrandIDs, instantApply, applyButtonText } = props;
 
   /**
    * A function to determine whether or not the apply button should be displayed.
@@ -59,6 +60,15 @@ const VacancyDescriptionModal = (
     }
   }
 
+  // A function to dynamically set apply button's text 
+  const setApplyButtonText = () => {
+    if(applyButtonText === '' || !applyButtonText){
+      return 'Apply Now'
+    } else {
+      return applyButtonText
+    }
+  }
+
   try {
     return (
       <div className="vacancy-item">
@@ -71,7 +81,7 @@ const VacancyDescriptionModal = (
               target="_blank"
               rel="noreferrer noopener"
             >
-              Apply Now
+              {setApplyButtonText()}
             </a>
           </div>
         ) : 
@@ -139,7 +149,7 @@ const VacancyDescriptionModal = (
               target="_blank"
               rel="noreferrer noopener"
             >
-              Apply Now
+              {setApplyButtonText()}
             </a>
           </div>
         ) : 
