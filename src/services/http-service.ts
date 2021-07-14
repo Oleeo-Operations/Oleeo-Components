@@ -23,12 +23,10 @@ class HttpService {
       const cachedResponse = cacheService.get(url);
 
       if (!cachedResponse) {
-        console.log(`No cache for ${url}`);
         return request;
       }
 
       if (cachedResponse.expiry < Date.now()) {
-        console.log(`Cache expired for ${url}`);
         return request;
       }
 
@@ -41,7 +39,6 @@ class HttpService {
           status: 200,
           statusText: '',
         });
-      console.log(`Using cached response for ${url}`);
       return request;
     });
 
