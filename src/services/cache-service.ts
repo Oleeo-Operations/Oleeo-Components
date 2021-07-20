@@ -28,7 +28,7 @@ class CacheService {
     // TODO: Match on params too
 
     const cacheEntry = this.cache.get(url);
-    const locStorEntry = localStorage.getItem(url);
+    const locStorEntry = sessionStorage.getItem(url);
 
     if (!cacheEntry) {
       if (locStorEntry !== null) {
@@ -60,7 +60,7 @@ class CacheService {
     };
     console.log(`Adding cache entry for ${url}`);
     this.cache.set(url, cacheEntry);
-    localStorage.setItem(url, JSON.stringify(cacheEntry));
+    sessionStorage.setItem(url, JSON.stringify(cacheEntry));
   }
 }
 
