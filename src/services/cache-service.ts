@@ -26,10 +26,23 @@ class CacheService {
    */
   public get(url: string): CacheEntry {
     // TODO: Match on params too
-    if (!this.cache.get(url) && localStorage.getItem(url) !== null) {
-      return JSON.parse(localStorage.getItem(url));
+
+    const cacheEntry = this.cache.get(url);
+    const locStorEntry = localStorage.getItem(url);
+
+    if (!cacheEntry) {
+      if (locStorEntry !== null) {
+        const parsedLocStorEntry = JSON.parse(locStorEntry);
+
+        // we have the respone in localStorage but not in the cache
+        // let's sync them
+        console.log(`Syncing cache entry for ${url}`);
+        this.cache.set(url, parsedLocStorEntry);
+        return parsedLocStorEntry;
+      }
     }
-    return this.cache.get(url)
+
+    return cacheEntry;
   }
 
   /**
@@ -38,13 +51,14 @@ class CacheService {
    * @param {AxiosResponse} response
    * @memberof CacheService
    */
-  
+
   public add(url: string, response: AxiosResponse): void {
     const cacheEntry: CacheEntry = {
       response,
       params: response.config.params,
       expiry: Date.now() + this.cacheExpiry - 1,
     };
+    console.log(`Adding cache entry for ${url}`);
     this.cache.set(url, cacheEntry);
     localStorage.setItem(url, JSON.stringify(cacheEntry));
   }

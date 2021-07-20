@@ -23,10 +23,12 @@ class HttpService {
       const cachedResponse = cacheService.get(url);
 
       if (!cachedResponse) {
+        console.log(`No cache for ${url}`);
         return request;
       }
 
       if (cachedResponse.expiry < Date.now()) {
+        console.log(`Cache expired for ${url}`);
         return request;
       }
 
@@ -36,16 +38,20 @@ class HttpService {
           headers: request.headers,
           config: request,
           request,
-          status: 200,
+          // mark the response as cached so we don't end up re-adding it to the cache
+          // and thus keep changing its expiration indefinetely
+          status: 304,
           statusText: '',
         });
+
+      console.log(`Using cached response for ${url}`);
       return request;
     });
 
     this.axios.interceptors.response.use((response: AxiosResponse) => {
-      if (response.request.responseURL) {
+      if (response.status !== 304 && response.request.responseURL) {
         cacheService.add(response.request.responseURL, response);
-      } else if (response.config.url) {
+      } else if (response.status !== 304 && response.config.url) {
         cacheService.add(response.config.url, response);
       }
       return response;
