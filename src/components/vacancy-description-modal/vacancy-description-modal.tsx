@@ -85,8 +85,20 @@ const VacancyDescriptionModal = (
             </a>
           </div>
         ) : 
+        <div>
           <div className = "apply-button">
             <h4 style={{color: "red"}}>No quick apply - please check job description for how to apply</h4>
+          </div>
+          <div className="apply-button">
+            <a
+              href={shouldSetToInstantApply()}
+              className="btn btn-primary"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              {setApplyButtonText()}
+            </a>
+          </div>
           </div>
         }
         <div className="vacancy-information">
@@ -141,7 +153,6 @@ const VacancyDescriptionModal = (
             __html: vacancy.content.job_description,
           }}
         />
-        {shouldDisplayApplyButton() ? (
           <div className="apply-button">
             <a
               href={vacancy.link}
@@ -152,11 +163,6 @@ const VacancyDescriptionModal = (
               {setApplyButtonText()}
             </a>
           </div>
-        ) : 
-        <div className = "apply-button">
-          <h4 style={{color: "#ff0f0f"}}>No quick apply - please check job description for how to apply</h4>
-        </div>
-        }
       </div>
     );
   } catch ($e) {
