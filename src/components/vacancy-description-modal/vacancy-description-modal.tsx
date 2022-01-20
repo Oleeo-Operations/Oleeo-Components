@@ -153,7 +153,7 @@ const VacancyDescriptionModal = (
             __html: vacancy.content.job_description,
           }}
         />
-{/*           <div className="apply-button1">
+          <div className="apply-button1">
             <a
               href={shouldSetToInstantApply()}
               className="btn btn-primary"
@@ -162,7 +162,7 @@ const VacancyDescriptionModal = (
             >
               {setApplyButtonText()}
             </a>
-          </div> */}
+          </div>
       </div>
     );
   } catch ($e) {
