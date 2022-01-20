@@ -155,7 +155,7 @@ const VacancyDescriptionModal = (
         />
           <div className="apply-button">
             <a
-              href={vacancy.link}
+              href={shouldSetToInstantApply()}
               className="btn btn-primary"
               target="_blank"
               rel="noreferrer noopener"
