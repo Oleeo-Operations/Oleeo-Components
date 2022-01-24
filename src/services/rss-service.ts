@@ -21,7 +21,7 @@ class RSSService {
       switchMap((response: string) => {
         // Turn response into desired XML using formatXML function
         return from(parser.parseString(formatXML(response))).pipe(
-          map((output: Output): Vacancy[] => {
+          map((output: Output<any>): Vacancy[] => {
             const vacancies = output.items.map((item: Item) => {
               // Temporarily store the item in an object
               const vac: Vacancy = { ...(item as Vacancy) };
